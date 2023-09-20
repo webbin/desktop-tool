@@ -14,6 +14,7 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 // import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { execCommandSync } from './childprocess/childprocess'
 
 class AppUpdater {
   constructor() {
@@ -29,6 +30,11 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+ipcMain.handle('exec-command', (event, command) => {
+  const res = execCommandSync(command);
+  return res;
 });
 
 if (process.env.NODE_ENV === 'production') {

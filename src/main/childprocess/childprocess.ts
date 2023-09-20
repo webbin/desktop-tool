@@ -1,4 +1,4 @@
-import { exec } from 'child_process';
+import { exec, execSync } from 'child_process';
 
 function execCommand(command: string) {
   exec(command, (err, res) => {
@@ -10,6 +10,8 @@ function execCommand(command: string) {
   });
 }
 
-export {
-  execCommand,
+function execCommandSync(command: string) {
+  return execSync(command).toString();
 }
+
+export { execCommand, execCommandSync };
