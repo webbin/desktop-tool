@@ -10,7 +10,11 @@ export default function CommandItem(props: CommandItemProp) {
   const { data } = props;
 
   const onEdit = () => {
-    console.log('command ', data);
+    console.log('edit command ', data);
+  };
+
+  const onDelete = () => {
+    console.log('delete command ', data);
   };
 
   const runCommand = () => {
@@ -34,6 +38,9 @@ export default function CommandItem(props: CommandItemProp) {
       <span>{data.title}</span>
       <span>{data.command}</span>
 
+      <button type="button" onClick={onDelete}>
+        删除
+      </button>
       <button type="button" onClick={onEdit}>
         编辑
       </button>
