@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { CommandData } from '../types';
+import styles from './command.item.module.scss';
 
 interface CommandItemProp {
   data: CommandData;
@@ -29,22 +30,17 @@ export default function CommandItem(props: CommandItemProp) {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: '#cac',
-        borderRadius: 10,
-      }}
-    >
-      <span>{data.title}</span>
-      <span>{data.command}</span>
+    <div className={styles.container}>
+      <p>{data.title}</p>
+      <p>{data.command}</p>
 
-      <button type="button" onClick={onDelete}>
+      <button className={styles.button} type="button" onClick={onDelete}>
         删除
       </button>
-      <button type="button" onClick={onEdit}>
+      <button className={styles.button} type="button" onClick={onEdit}>
         编辑
       </button>
-      <button type="button" onClick={runCommand}>
+      <button className={styles.button} type="button" onClick={runCommand}>
         执行
       </button>
     </div>

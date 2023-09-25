@@ -11,14 +11,25 @@ import CommandList from './components/CommandList';
 const COMMAND_KEY = 'COMMAND';
 
 function Hello() {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [title, setTitle] = useState('');
+  const [command, setCommand] = useState('');
+
   const commandRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
 
   const [commands, setCommands] = useState<CommandData[]>([]);
 
+  const updateLocalData = () => {
+    const str = window.localStorage.getItem(COMMAND_KEY);
+    if (str) {
+      const list = JSON.parse(str);
+      setCommands(list);
+    }
+  };
+
   useEffect(() => {
-    window.electron.ipcRenderer.sendMessage('ipc-example', {});
+    // window.electron.ipcRenderer.sendMessage('ipc-example', {});
+    updateLocalData();
   }, []);
 
   useEffect(() => {
@@ -27,31 +38,48 @@ function Hello() {
   }, [commands]);
 
   const onAddCommand = (cmd: string, tit?: string) => {
+    console.log('add command ', cmd, 'title: ', tit);
     setCommands((old) => {
       const newList = [...old, { command: cmd, title: tit }];
       const data = JSON.stringify(newList);
       window.localStorage.setItem(COMMAND_KEY, data);
       return newList;
     });
+    setCommand('');
+    setTitle('');
   };
 
   return (
     <div className={styles.root}>
-      <CommandList data={commands} />
+      <CommandList onRefresh={updateLocalData} data={commands} />
       <div className={styles.input_row}>
         <span>Command:</span>
-        <input className={styles.input} ref={commandRef} />
+        <input
+          value={command}
+          onChange={(event) => {
+            setCommand(event.target.value);
+          }}
+          className={styles.input}
+          ref={commandRef}
+        />
       </div>
       <div className={styles.input_row}>
         <span>Title:</span>
-        <input className={styles.input} ref={inputRef} />
+        <input
+          value={title}
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+          className={styles.input}
+          ref={titleRef}
+        />
       </div>
       <button
         type="button"
         className={styles.add_button}
         onClick={() => {
-          const command = commandRef.current?.value;
-          const title = titleRef.current?.value;
+          // const command = commandRef.current?.value;
+          // const title = titleRef.current?.value;
           if (command) {
             onAddCommand(command, title);
           }
