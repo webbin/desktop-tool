@@ -1,0 +1,38 @@
+
+.input_row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 10px;
+  height: 44px;
+}
+
+.input_row span {
+  // width: 90px;
+}
+
+.input_row span {
+  color: #fff;
+}
+
+.input {
+  padding: 5px 25px;
+  font-size: 20px;
+  color: #000;
+  margin: 0 20px;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.input:nth-child(4) {
+  flex: 1;
+}
+
+.add_button {
+  width: 100px;
+  height: 34px;
+  padding-top: 0;
+  padding-bottom: 0;
+  // margin: 20px 0;
+}

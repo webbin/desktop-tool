@@ -1,5 +1,3 @@
-
-
 type CommandData = {
   title?: string;
   command: string;

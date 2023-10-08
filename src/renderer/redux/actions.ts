@@ -1,3 +1,3 @@
-export { setSceneRoleMoveData, setUserRole } from './RoleDataReducer';
-export { setVipDialogVisible } from './GlobalDataReducer';
-export { setUserDetail, setUserVIPData } from './UserDataReducer';
+export { addCommand, deleteCommand, initCommands } from './CommandListReducer';
+export { setExecResult } from './CommandInfoReducer';
+export { clearExecResult, addExecResult } from './CommandResultList';

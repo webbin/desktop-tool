@@ -1,15 +1,33 @@
 .container {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
   background-color: #fda;
   border-radius: 10px;
   margin: 10px 20px;
+  overflow: hidden;
+}
+
+.title {
+  background-color: #fff;
+  font-size: 18px;
+  margin: 0;
+  padding: 10px 20px;
+}
+
+.command {
+  font-size: 14px;
+  margin: 0;
+  padding: 5px 20px;
 }
 
 .button_row {
+  align-self: stretch;
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+  margin: 10px 20px;
+  justify-content: space-around;
 }
 
 .button:nth-child(2) {
@@ -18,5 +36,6 @@
 }
 
 .button {
+  flex: 1;
   font-size: 14px;
 }

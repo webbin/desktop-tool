@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import RoleDataReducer from './RoleDataReducer';
-import GlobalDataReducer from './GlobalDataReducer';
-import UserDataReducer from './UserDataReducer';
+import commandList from './CommandListReducer';
+import commandInfo from './CommandInfoReducer';
+import commandResultList from './CommandResultList';
 
 export const store = configureStore({
   reducer: {
-    roleData: RoleDataReducer,
-    globalData: GlobalDataReducer,
-    userData: UserDataReducer,
+    commandList,
+    commandInfo,
+    commandResultList,
   },
   devTools: false,
 });
