@@ -33,16 +33,17 @@ export default function CommandItem(props: CommandItemProp) {
     <div className={styles.container}>
       <p>{data.title}</p>
       <p>{data.command}</p>
-
-      <button className={styles.button} type="button" onClick={onDelete}>
-        删除
-      </button>
-      <button className={styles.button} type="button" onClick={onEdit}>
-        编辑
-      </button>
-      <button className={styles.button} type="button" onClick={runCommand}>
-        执行
-      </button>
+      <div className={styles.button_row}>
+        <button className={styles.button} type="button" onClick={onDelete}>
+          删除
+        </button>
+        <button className={styles.button} type="button" onClick={onEdit}>
+          编辑
+        </button>
+        <button className={styles.button} type="button" onClick={runCommand}>
+          执行
+        </button>
+      </div>
     </div>
   );
 }
