@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useAppSelector } from '../../redux/hooks';
-import styles from './command.list.scss';
-import CommandItem from '../../components/CommandItem';
+import styles from './CommandListView.scss';
+import CommandItem from './CommandItem';
 
 export default function CommandListView() {
   const commandList = useAppSelector((store) => store.commandList);

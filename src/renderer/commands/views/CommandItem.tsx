@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 
-import { CommandData } from '../types';
-import { useAppDispatch } from '../redux/hooks';
-import { addExecResult, deleteCommand, updateCommand } from '../redux/actions';
-import { deleteLocalCommand, updateCommandByKey } from '../commands/handler';
-import styles from './command.item.module.scss';
+import { CommandData } from '../../types';
+import { useAppDispatch } from '../../redux/hooks';
+import {
+  addExecResult,
+  deleteCommand,
+  updateCommand,
+} from '../../redux/actions';
+import { deleteLocalCommand, updateCommandByKey } from '../handler';
+import styles from './CommandItem.scss';
 
 interface CommandItemProp {
   data: CommandData;

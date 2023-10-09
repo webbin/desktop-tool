@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 
 // import { setExecResult } from '../../redux/actions';
 import { useAppSelector } from '../../redux/hooks';
-import styles from './command.result.scss';
+import styles from './CommandResultView.scss';
 import TimeUtil from '../../utils/TimeUtil';
 
 export default function CommandResultView() {

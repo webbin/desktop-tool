@@ -9,14 +9,6 @@ import './App.css';
 // import styles from './App.module.scss';
 import CommandPage from './commands/CommandPage';
 
-// function Hello() {
-//   return (
-//     <div className={styles.root}>
-//       <CommandList onRefresh={updateLocalData} data={commands} />
-//     </div>
-//   );
-// }
-
 export default function App() {
   return (
     <Provider store={store}>

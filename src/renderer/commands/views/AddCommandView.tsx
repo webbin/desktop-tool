@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring';
 
 import { useAppDispatch } from '../../redux/hooks';
 import { addCommand } from '../../redux/actions';
-import styles from './add.command.scss';
+import styles from './AddCommandView.scss';
 import { addCommandToLocal } from '../handler';
 import DataUtil from '../../utils/DataUtil';
 
