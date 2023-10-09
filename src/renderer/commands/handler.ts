@@ -16,10 +16,20 @@ const saveLocalCommandList = (list: CommandData[]) => {
   window.localStorage.setItem(COMMAND_KEY, data);
 };
 
-const deleteLocalCommand = (command: string) => {
+const deleteLocalCommand = (key: string) => {
   const list = getLocalCommandList();
   if (list) {
-    const index = list.findIndex((item) => item.command === command);
+    const index = list.findIndex((item) => item.key === key);
+    if (index >= 0) {
+      list.splice(index, 1);
+      saveLocalCommandList(list);
+    }
+  }
+};
+
+const deleteLocalCommandByIndex = (index: number) => {
+  const list = getLocalCommandList();
+  if (list) {
     if (index >= 0) {
       list.splice(index, 1);
       saveLocalCommandList(list);
@@ -30,12 +40,10 @@ const deleteLocalCommand = (command: string) => {
 const addCommandToLocal = (data: CommandData) => {
   const list = getLocalCommandList();
   if (list) {
-    const { command } = data;
-    const index = list.findIndex((item) => item.command === command);
+    const { key } = data;
+    const index = list.findIndex((item) => item.key === key);
     if (index < 0) {
       list.push(data);
-    } else {
-      list[index] = data;
     }
     saveLocalCommandList(list);
   } else {
@@ -44,9 +52,23 @@ const addCommandToLocal = (data: CommandData) => {
   }
 };
 
+const updateCommandByKey = (data: CommandData) => {
+  const list = getLocalCommandList();
+  if (list) {
+    const { key } = data;
+    const index = list.findIndex((item) => item.key === key);
+    if (index >= 0) {
+      list[index] = data;
+    }
+    saveLocalCommandList(list);
+  }
+};
+
 export {
   getLocalCommandList,
   saveLocalCommandList,
   addCommandToLocal,
   deleteLocalCommand,
+  deleteLocalCommandByIndex,
+  updateCommandByKey,
 };

@@ -236,31 +236,31 @@ export default class MenuBuilder {
         label: 'Help',
         submenu: [
           {
-            label: 'Learn More',
+            label: 'About',
             click() {
-              shell.openExternal('https://electronjs.org');
+              // shell.openExternal('https://electronjs.org');
             },
           },
-          {
-            label: 'Documentation',
-            click() {
-              shell.openExternal(
-                'https://github.com/electron/electron/tree/main/docs#readme'
-              );
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
-            },
-          },
-          {
-            label: 'Search Issues',
-            click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
-            },
-          },
+          // {
+          //   label: 'Documentation',
+          //   click() {
+          //     shell.openExternal(
+          //       'https://github.com/electron/electron/tree/main/docs#readme'
+          //     );
+          //   },
+          // },
+          // {
+          //   label: 'Community Discussions',
+          //   click() {
+          //     shell.openExternal('https://www.electronjs.org/community');
+          //   },
+          // },
+          // {
+          //   label: 'Search Issues',
+          //   click() {
+          //     shell.openExternal('https://github.com/electron/electron/issues');
+          //   },
+          // },
         ],
       },
     ];

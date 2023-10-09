@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-type CommandResultInfo = {
-  command: string;
-  result: string;
-};
+import { CommandResultInfo } from '../types';
 
 const InitialState: CommandResultInfo[] = [];
 

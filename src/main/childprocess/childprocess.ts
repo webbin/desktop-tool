@@ -1,4 +1,5 @@
 import { exec, execSync } from 'child_process';
+import iconv from 'iconv-lite';
 
 function execCommand(command: string) {
   exec(command, (err, res) => {
@@ -11,7 +12,9 @@ function execCommand(command: string) {
 }
 
 function execCommandSync(command: string) {
-  return execSync(command).toString();
+  const buffer = execSync(command);
+  // return buffer;
+  return iconv.decode(buffer, 'cp936');
 }
 
 export { execCommand, execCommandSync };

@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { FloatButton } from 'antd';
+import { PlusCircleOutlined, ClearOutlined } from '@ant-design/icons';
 
 import { getLocalCommandList } from './handler';
-import { useAppDispatch } from '../redux/hooks';
-import { initCommands } from '../redux/actions';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { initCommands, clearExecResult } from '../redux/actions';
 import styles from './command.page.module.scss';
 
 import AddCommandView from './views/AddCommandView';
@@ -12,6 +14,8 @@ import CommandResultView from './views/CommandResultView';
 
 export default function CommandPage() {
   const dispatch = useAppDispatch();
+  const resultCount = useAppSelector((store) => store.commandResultList.length);
+  const [addVisible, setAddVisible] = useState(false);
 
   useEffect(() => {
     const list = getLocalCommandList();
@@ -31,7 +35,29 @@ export default function CommandPage() {
         <CommandListView />
         <CommandResultView />
       </div>
-      <AddCommandView />
+      <FloatButton.Group style={{ bottom: 76 }}>
+        {resultCount > 0 ? (
+          <FloatButton
+            type="primary"
+            tooltip="Clear Console"
+            icon={<ClearOutlined />}
+            onClick={() => {
+              dispatch(clearExecResult());
+            }}
+          />
+        ) : null}
+
+        <FloatButton
+          tooltip="Add Command"
+          icon={<PlusCircleOutlined />}
+          onClick={() => {
+            console.log('show add');
+            setAddVisible((old) => !old);
+          }}
+        />
+      </FloatButton.Group>
+
+      <AddCommandView visible={addVisible} />
     </div>
   );
 }

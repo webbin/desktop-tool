@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
+import { useSpring, animated } from 'react-spring';
 
 import { useAppDispatch } from '../../redux/hooks';
 import { addCommand } from '../../redux/actions';
 import styles from './add.command.scss';
 import { addCommandToLocal } from '../handler';
+import DataUtil from '../../utils/DataUtil';
 
-export default function AddCommandView() {
+interface Props {
+  visible: boolean;
+}
+
+export default function AddCommandView(props: Props) {
+  const { visible } = props;
+
   const [title, setTitle] = useState('');
   const [command, setCommand] = useState('');
   const dispatch = useAppDispatch();
@@ -15,10 +23,18 @@ export default function AddCommandView() {
   // const commandRef = useRef<HTMLInputElement>(null);
   // const titleRef = useRef<HTMLInputElement>(null);
 
+  const { transform } = useSpring({
+    transform: `translateY(${visible ? 0 : 74}px)`,
+    config: {
+      duration: 300,
+    },
+  });
+
   const onAddCommand = (cmd: string, tit?: string) => {
     console.log('add command ', cmd, 'title: ', tit);
     if (tit && cmd) {
-      const data = { title: tit, command: cmd };
+      const key = DataUtil.UUID();
+      const data = { title: tit, command: cmd, key };
       addCommandToLocal(data);
       dispatch(addCommand(data));
       setCommand('');
@@ -31,7 +47,12 @@ export default function AddCommandView() {
   };
 
   return (
-    <div className={styles.input_row}>
+    <animated.div
+      style={{
+        transform,
+      }}
+      className={styles.input_row}
+    >
       {contextHolder}
       <span>Title:</span>
       <input
@@ -55,11 +76,11 @@ export default function AddCommandView() {
         type="button"
         className={styles.add_button}
         onClick={() => {
-          onAddCommand(command, title);
+          onAddCommand(command.trim(), title.trim());
         }}
       >
         Add
       </button>
-    </div>
+    </animated.div>
   );
 }

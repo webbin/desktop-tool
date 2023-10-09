@@ -22,14 +22,21 @@ const info = createSlice({
         state.splice(index, 1);
       }
     },
+    updateCommand(state, action: PayloadAction<CommandData>) {
+      const { key } = action.payload;
+      const index = state.findIndex((item) => item.key === key);
+      if (index >= 0) {
+        state[index] = action.payload;
+      }
+    },
   },
 });
 
 const {
-  actions: { addCommand, deleteCommand, initCommands },
+  actions: { addCommand, deleteCommand, initCommands, updateCommand },
   reducer,
 } = info;
 
 export default reducer;
 
-export { addCommand, deleteCommand, initCommands };
+export { addCommand, deleteCommand, initCommands, updateCommand };

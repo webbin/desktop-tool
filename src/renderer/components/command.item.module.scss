@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  background-color: #fda;
+  background-color: #ffac89;
   border-radius: 10px;
   margin: 10px 20px;
   overflow: hidden;
@@ -14,10 +14,28 @@
   padding: 10px 20px;
 }
 
+.title_input {
+  background-color: #fff;
+  font-size: 18px;
+  margin: 0;
+  padding: 10px 20px;
+  border-style: none;
+}
+
 .command {
   font-size: 14px;
   margin: 0;
   padding: 5px 20px;
+}
+
+.command_input {
+  font-size: 14px;
+  margin: 5px 10px;
+  padding: 5px 10px;
+  resize: none;
+  border-style: none;
+  flex: 1;
+  font-family: inherit;
 }
 
 .button_row {

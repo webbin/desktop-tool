@@ -5,6 +5,12 @@
   align-items: center;
   padding: 15px 10px;
   height: 44px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(100,100,100,0.7);
+  // transform: translateY(44px);
 }
 
 .input_row span {

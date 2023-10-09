@@ -1,6 +1,13 @@
 type CommandData = {
   title?: string;
   command: string;
+  key: string;
 };
 
-export { CommandData };
+type CommandResultInfo = {
+  command: string;
+  result: string;
+  timestamp: number;
+};
+
+export { CommandData, CommandResultInfo };

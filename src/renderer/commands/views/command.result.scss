@@ -2,8 +2,15 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-color: #000;
-  overflow-y: scroll;
+  // background-color: #000;
+  overflow-y: auto;
+  // padding: 20px 0;
+}
+
+.result_container {
+  background-color: #333;
+  margin: 5px 10px;
+  border-radius: 10px;
 }
 
 .title {
@@ -13,8 +20,22 @@
   margin: 20px 0;
 }
 
-.result {
-  color: #fff;
-  padding: 0 20px;
+.time {
+  color: #0ff;
+  padding: 10px 20px 0px 20px;
   margin: 0;
+}
+
+.command {
+  color: #fff;
+  padding: 10px 20px 10px 20px;
+  margin: 0;
+}
+
+.result {
+  color: #ccc;
+  padding: 0 20px 10px 20px;
+  margin: 0;
+  text-wrap: wrap;
+  // white-space: pre;
 }
