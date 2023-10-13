@@ -14,6 +14,7 @@ function execCommand(command: string) {
 function execCommandSync(command: string) {
   const buffer = execSync(command);
   // return buffer;
+  console.log('execsync res: ', buffer.toString());
   return iconv.decode(buffer, 'cp936');
 }
 

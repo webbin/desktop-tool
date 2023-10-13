@@ -5,6 +5,14 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  width: 100vw;
+}
+
+.column_container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 

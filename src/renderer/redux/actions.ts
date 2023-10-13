@@ -1,8 +1,18 @@
-export {
+import { actions as CommandListActions } from './CommandListReducer';
+
+const {
+  updateCommand,
+  updateCommandTagByIndex,
+  initCommands,
   addCommand,
   deleteCommand,
-  initCommands,
+} = CommandListActions;
+export {
   updateCommand,
-} from './CommandListReducer';
+  updateCommandTagByIndex,
+  initCommands,
+  addCommand,
+  deleteCommand,
+};
 export { setExecResult } from './CommandInfoReducer';
 export { clearExecResult, addExecResult } from './CommandResultList';

@@ -29,14 +29,20 @@ const info = createSlice({
         state[index] = action.payload;
       }
     },
+    updateCommandTagByIndex(
+      state,
+      action: PayloadAction<{ index: number; tag: string }>
+    ) {
+      const { index, tag } = action.payload;
+      if (state[index]) {
+        state[index].tag = tag;
+      }
+    },
   },
 });
 
-const {
-  actions: { addCommand, deleteCommand, initCommands, updateCommand },
-  reducer,
-} = info;
+const { actions, reducer } = info;
 
 export default reducer;
 
-export { addCommand, deleteCommand, initCommands, updateCommand };
+export { actions };

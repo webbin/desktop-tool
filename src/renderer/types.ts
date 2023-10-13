@@ -2,6 +2,7 @@ type CommandData = {
   title?: string;
   command: string;
   key: string;
+  tag?: string;
 };
 
 type CommandResultInfo = {

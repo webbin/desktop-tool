@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import { CommandData } from '../../types';
+import AutoTextArea from '../../components/AutoTextArea';
 import { useAppDispatch } from '../../redux/hooks';
 import {
   addExecResult,
@@ -13,16 +15,20 @@ import styles from './CommandItem.scss';
 
 interface CommandItemProp {
   data: CommandData;
+  index: number;
+  onItemEditTag: (index: number) => void;
 }
 
 export default function CommandItem(props: CommandItemProp) {
   const dispatch = useAppDispatch();
-  const { data } = props;
+  const { data, index, onItemEditTag } = props;
 
   const [editTitle, setEditTitle] = useState(data.title);
   const [editCommand, setEditCommand] = useState(data.command);
   const [editing, setEditing] = useState(false);
   const [commandRunning, setCommandRunning] = useState(false);
+
+  const tagName = data.tag || 'Add Tag';
 
   const onEdit = () => {
     console.log('edit command ', data);
@@ -50,6 +56,10 @@ export default function CommandItem(props: CommandItemProp) {
     };
     updateCommandByKey(commandData);
     dispatch(updateCommand(commandData));
+  };
+
+  const onEditTag = () => {
+    onItemEditTag(index);
   };
 
   const runCommand = () => {
@@ -93,16 +103,34 @@ export default function CommandItem(props: CommandItemProp) {
         <p className={styles.title}>{data.title}</p>
       )}
       {editing ? (
-        <textarea
+        <AutoTextArea
           className={styles.command_input}
           onChange={(event) => {
             setEditCommand(event.target.value);
           }}
           value={editCommand}
-          // type="text"
         />
       ) : (
         <p className={styles.command}>{data.command}</p>
+      )}
+      {editing ? null : (
+        <div className={styles.option_button_container}>
+          <Button
+            className={styles.add_tag_button}
+            type="default"
+            onClick={onEditTag}
+            // icon={<DeleteOutlined />}
+          >
+            {tagName}
+          </Button>
+          <Button
+            // className={styles.delete_button}
+            danger
+            type="primary"
+            onClick={onDelete}
+            icon={<DeleteOutlined />}
+          />
+        </div>
       )}
       <div className={styles.button_row}>
         {editing ? (
@@ -124,14 +152,6 @@ export default function CommandItem(props: CommandItemProp) {
           </>
         ) : (
           <>
-            <Button
-              className={styles.button}
-              danger
-              type="primary"
-              onClick={onDelete}
-            >
-              删除
-            </Button>
             <Button className={styles.button} type="primary" onClick={onEdit}>
               编辑
             </Button>
