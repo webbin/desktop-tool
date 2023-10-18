@@ -10,13 +10,12 @@ import {
   deleteCommand,
   updateCommand,
 } from '../../redux/actions';
-import { deleteLocalCommand, updateCommandByKey } from '../handler';
 import styles from './CommandItem.scss';
 
 interface CommandItemProp {
   data: CommandData;
   index: number;
-  onItemEditTag: (index: number) => void;
+  onItemEditTag: (index: number, data: CommandData) => void;
 }
 
 export default function CommandItem(props: CommandItemProp) {
@@ -37,8 +36,7 @@ export default function CommandItem(props: CommandItemProp) {
 
   const onDelete = () => {
     console.log('delete command ', data);
-    deleteLocalCommand(data.key);
-    dispatch(deleteCommand(data.command));
+    dispatch(deleteCommand(data.key));
   };
 
   const onCancelEdit = () => {
@@ -53,13 +51,13 @@ export default function CommandItem(props: CommandItemProp) {
       command: editCommand,
       title: editTitle,
       key: data.key,
+      tag: data.tag,
     };
-    updateCommandByKey(commandData);
     dispatch(updateCommand(commandData));
   };
 
   const onEditTag = () => {
-    onItemEditTag(index);
+    onItemEditTag(index, data);
   };
 
   const runCommand = () => {

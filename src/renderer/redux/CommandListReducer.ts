@@ -16,8 +16,8 @@ const info = createSlice({
       state.push(action.payload);
     },
     deleteCommand(state, action: PayloadAction<string>) {
-      const cmd = action.payload;
-      const index = state.findIndex((item) => item.command === cmd);
+      const key = action.payload;
+      const index = state.findIndex((item) => item.key === key);
       if (index >= 0) {
         state.splice(index, 1);
       }
@@ -29,12 +29,13 @@ const info = createSlice({
         state[index] = action.payload;
       }
     },
-    updateCommandTagByIndex(
+    updateCommandTagByKey(
       state,
-      action: PayloadAction<{ index: number; tag: string }>
+      action: PayloadAction<{ key: string; tag: string }>
     ) {
-      const { index, tag } = action.payload;
-      if (state[index]) {
+      const { key, tag } = action.payload;
+      const index = state.findIndex((item) => item.key === key);
+      if (index >= 0) {
         state[index].tag = tag;
       }
     },

@@ -3,12 +3,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FloatButton } from 'antd';
 import { PlusCircleOutlined, ClearOutlined } from '@ant-design/icons';
 
-import { getLocalCommandList } from './handler';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
-  initCommands,
+  // initCommands,
   clearExecResult,
-  updateCommandTagByIndex,
+  updateCommandTagByKey,
 } from '../redux/actions';
 import styles from './CommandPage.scss';
 
@@ -22,18 +21,19 @@ export default function CommandPage() {
   const dispatch = useAppDispatch();
   const resultCount = useAppSelector((store) => store.commandResultList.length);
 
-  const editIndexRef = useRef<number>();
+  const editKeyRef = useRef<string>();
 
   const [addVisible, setAddVisible] = useState(false);
+  const [initTag, setInitTag] = useState<string>();
   const [editTagModalVisible, setEditTagModalVisible] = useState(false);
 
   useEffect(() => {
-    const list = getLocalCommandList();
-    if (list) {
-      console.log('local command list: ');
-      console.log(list);
-      dispatch(initCommands(list));
-    }
+    // const list = getLocalCommandList();
+    // if (list) {
+    //   console.log('local command list: ');
+    //   console.log(list);
+    //   dispatch(initCommands(list));
+    // }
     return () => {
       // second
     };
@@ -41,15 +41,12 @@ export default function CommandPage() {
 
   const dismissEditTagModal = () => {
     setEditTagModalVisible(false);
-    editIndexRef.current = undefined;
+    editKeyRef.current = undefined;
   };
 
   const onTagOk = (text: string) => {
-    // console.log('update command tag ', editIndexRef.current, text);
-    if (editIndexRef.current !== undefined) {
-      dispatch(
-        updateCommandTagByIndex({ index: editIndexRef.current, tag: text })
-      );
+    if (editKeyRef.current !== undefined) {
+      dispatch(updateCommandTagByKey({ tag: text, key: editKeyRef.current }));
     }
     dismissEditTagModal();
   };
@@ -60,8 +57,9 @@ export default function CommandPage() {
         <CommandTagBar />
         <div className={styles.main_content}>
           <CommandListView
-            onItemEditTag={(i: number) => {
-              editIndexRef.current = i;
+            onItemEditTag={(i: number, data) => {
+              editKeyRef.current = data.key;
+              setInitTag(data.tag || '');
               setEditTagModalVisible(true);
             }}
           />
@@ -95,6 +93,7 @@ export default function CommandPage() {
         onCancel={dismissEditTagModal}
         onOk={onTagOk}
         open={editTagModalVisible}
+        initValue={initTag}
       />
     </div>
   );

@@ -5,7 +5,6 @@ import { useSpring, animated } from 'react-spring';
 import { useAppDispatch } from '../../redux/hooks';
 import { addCommand } from '../../redux/actions';
 import styles from './AddCommandView.scss';
-import { addCommandToLocal } from '../handler';
 import DataUtil from '../../utils/DataUtil';
 
 interface Props {
@@ -35,7 +34,6 @@ export default function AddCommandView(props: Props) {
     if (tit && cmd) {
       const key = DataUtil.UUID();
       const data = { title: tit, command: cmd, key };
-      addCommandToLocal(data);
       dispatch(addCommand(data));
       setCommand('');
       setTitle('');
