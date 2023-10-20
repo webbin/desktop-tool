@@ -53,7 +53,16 @@ export default function CommandPage() {
 
   return (
     <div id="command-page" className={styles.root}>
-      <div className={styles.column_container}>
+      <div
+        // onClick={(event) => {
+        //   if (addVisible) {
+        //     setAddVisible(false);
+        //     event.preventDefault();
+        //     event.stopPropagation();
+        //   }
+        // }}
+        className={styles.column_container}
+      >
         <CommandTagBar />
         <div className={styles.main_content}>
           <CommandListView
@@ -66,7 +75,7 @@ export default function CommandPage() {
           <CommandResultView />
         </div>
       </div>
-      <FloatButton.Group style={{ bottom: 76 }}>
+      <FloatButton.Group>
         {resultCount > 0 ? (
           <FloatButton
             type="primary"

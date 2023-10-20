@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { message } from 'antd';
+import { message, Button } from 'antd';
 import { useSpring, animated } from 'react-spring';
 
 import { useAppDispatch } from '../../redux/hooks';
@@ -23,7 +23,7 @@ export default function AddCommandView(props: Props) {
   // const titleRef = useRef<HTMLInputElement>(null);
 
   const { transform } = useSpring({
-    transform: `translateY(${visible ? 0 : 74}px)`,
+    transform: `translateX(${visible ? 300 : 0}px)`,
     config: {
       duration: 300,
     },
@@ -54,6 +54,7 @@ export default function AddCommandView(props: Props) {
       {contextHolder}
       <span>Title:</span>
       <input
+        maxLength={15}
         value={title}
         onChange={(event) => {
           setTitle(event.target.value);
@@ -62,23 +63,22 @@ export default function AddCommandView(props: Props) {
         // ref={titleRef}
       />
       <span>Command:</span>
-      <input
+      <textarea
         value={command}
         onChange={(event) => {
           setCommand(event.target.value);
         }}
         className={styles.input}
-        // ref={commandRef}
       />
-      <button
-        type="button"
+      <Button
+        type="primary"
         className={styles.add_button}
         onClick={() => {
           onAddCommand(command.trim(), title.trim());
         }}
       >
         Add
-      </button>
+      </Button>
     </animated.div>
   );
 }

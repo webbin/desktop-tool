@@ -1,10 +1,13 @@
 import {
   app,
   Menu,
-  shell,
+  // shell,
   BrowserWindow,
   MenuItemConstructorOptions,
+  dialog,
 } from 'electron';
+
+import os from 'os';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -237,9 +240,7 @@ export default class MenuBuilder {
         submenu: [
           {
             label: 'About',
-            click() {
-              // shell.openExternal('https://electronjs.org');
-            },
+            click: this.showAboutDialog,
           },
           // {
           //   label: 'Documentation',
@@ -267,4 +268,33 @@ export default class MenuBuilder {
 
     return templateDefault;
   }
+
+  showAboutDialog = () => {
+    const osInfo = `${os.type()} ${os.arch()} ${os.release()}`;
+    const [cpu] = os.cpus();
+    const cpuInfo = `CPU:${cpu.model}`;
+
+    // Platform : ${process.env.PLATFORM}
+    //       Arch : ${process.env.ARCH}
+
+    const detail = `
+      Version 1.0.0
+
+      Node js Version: ${process.versions.node}
+      V8 Version: ${process.versions.v8}
+      Chrome Version: ${process.versions.chrome}
+      Electron Version: ${process.versions.electron}
+
+      OS Info: ${osInfo}
+      CPU: ${cpuInfo}
+    `;
+
+    dialog.showMessageBox(this.mainWindow, {
+      type: 'info',
+      message: 'Command Book',
+      title: 'About',
+      detail,
+      buttons: ['OK'],
+    });
+  };
 }

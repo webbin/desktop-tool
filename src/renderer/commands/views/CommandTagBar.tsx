@@ -2,12 +2,12 @@
 /* eslint-disable react/no-array-index-key */
 import { useMemo } from 'react';
 import { Button } from 'antd';
+import classnames from 'classnames';
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import styles from './CommandTagBar.scss';
 import {
   deleteSelectedTag,
-  addSelectedTag,
   clearSeletedTags,
   setSeletedTags,
 } from '../../redux/actions';
@@ -32,9 +32,9 @@ function CommandTagItem(props: CommandTagItemProps) {
 
   return (
     <Button
-      className={`${styles.command_tag} ${
-        tagSelected ? styles.command_tag_selected : ''
-      }`}
+      className={classnames(styles.command_tag, {
+        [styles.command_tag_selected]: tagSelected,
+      })}
       onClick={() => {
         if (tag === TAG_ALL) {
           dispatch(clearSeletedTags());
