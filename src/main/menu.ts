@@ -5,9 +5,13 @@ import {
   BrowserWindow,
   MenuItemConstructorOptions,
   dialog,
+  ipcMain,
 } from 'electron';
 
 import os from 'os';
+import fs from 'fs';
+
+import { GET_COMMAND_LIST, REPLY_COMMAND_LIST } from './Constant';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -181,6 +185,12 @@ export default class MenuBuilder {
         label: '&File',
         submenu: [
           {
+            label: 'Export',
+            click: () => {
+              this.showExportDialog();
+            },
+          },
+          {
             label: '&Open',
             accelerator: 'Ctrl+O',
           },
@@ -268,6 +278,33 @@ export default class MenuBuilder {
 
     return templateDefault;
   }
+
+  showExportDialog = () => {
+    const defaultPath = app.getPath('documents');
+    dialog
+      .showSaveDialog({
+        title: 'Export Json File',
+        defaultPath,
+        filters: [{ extensions: ['json'], name: 'json' }],
+      })
+      .then((result) => {
+        if (result.canceled) return;
+        const p = result.filePath;
+        if (p) {
+          console.log('event names: ', ipcMain.eventNames());
+          ipcMain.on(REPLY_COMMAND_LIST, (event, arg: string) => {
+            if (arg) {
+              console.log(arg.length);
+            }
+          });
+          this.mainWindow.webContents.send(GET_COMMAND_LIST);
+        }
+        console.log('open directory result: ', result);
+      })
+      .catch((err) => {
+        console.log('open directory error ', err);
+      });
+  };
 
   showAboutDialog = () => {
     const osInfo = `${os.type()} ${os.arch()} ${os.release()}`;

@@ -35,6 +35,7 @@ export default function CommandPage() {
     //   console.log(list);
     //   dispatch(initCommands(list));
     // }
+    // window.electron.ipcRenderer.sendCommandList(() => )
     return () => {
       // second
     };
