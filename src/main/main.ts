@@ -14,7 +14,8 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 // import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { execCommandSync } from './childprocess/childprocess';
+import { EXECUTE_COMMAND, SET_SHELL_PATH } from './Constant';
+import { execCommandSync, setShellPath } from './childprocess/childprocess';
 
 // class AppUpdater {
 //   constructor() {
@@ -32,9 +33,14 @@ let mainWindow: BrowserWindow | null = null;
 //   event.reply('ipc-example', msgTemplate('pong'));
 // });
 
-ipcMain.handle('exec-command', (event, command) => {
+ipcMain.handle(EXECUTE_COMMAND, (event, command) => {
   const res = execCommandSync(command);
   return res;
+});
+
+ipcMain.on(SET_SHELL_PATH, (event, arg) => {
+  console.log('set shell path : ', arg);
+  setShellPath(arg);
 });
 
 if (process.env.NODE_ENV === 'production') {

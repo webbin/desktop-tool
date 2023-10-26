@@ -29,13 +29,27 @@ $flow_horizontal_padding: 20px;
 }
 
 .input {
-  padding: 5px 25px;
-  font-size: 20px;
+  padding: 10px 5px;
+  font-size: 16px;
+  line-height: 1;
   color: #000;
   border-radius: 10px;
   border-style: solid;
   border-width: 2px;
   margin: 10px 0;
+  font-family: inherit;
+}
+
+.command_input {
+  padding: 10px 5px;
+  font-size: 16px;
+  color: #000;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
+  margin: 10px 0;
+  font-family: inherit;
+  resize: none;
 }
 
 .add_button {

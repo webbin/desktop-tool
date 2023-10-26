@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.shell {
+  flex: 1;
+  height: 30px;
+  font-size: 18px;
+  color: #000;
+  font-family: inherit;
+  margin-right: 40px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #666;
+  border-width: 2px;
+  padding: 5px 12px;
+  text-align: center;
+}
+
+.input {
+  border-radius: 10px;
+}

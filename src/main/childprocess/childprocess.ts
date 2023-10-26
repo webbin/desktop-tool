@@ -4,6 +4,13 @@ import iconv from 'iconv-lite';
 const options = {
   shell: 'C:\\Program Files\\Git\\bin\\bash.exe',
 };
+
+function setShellPath(path: string) {
+  const p = path.replaceAll('\\', '\\\\');
+  console.log('path to set: ', p);
+  options.shell = path;
+}
+
 function execCommand(command: string) {
   exec(command, options, (err, res) => {
     if (err) {
@@ -27,4 +34,4 @@ function execCommandSync(command: string) {
   return res;
 }
 
-export { execCommand, execCommandSync };
+export { execCommand, execCommandSync, setShellPath };

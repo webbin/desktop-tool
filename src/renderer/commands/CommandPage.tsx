@@ -16,6 +16,7 @@ import CommandListView from './views/CommandListView';
 import CommandResultView from './views/CommandResultView';
 import CommandTagModal from './views/CommandTagModal';
 import CommandTagBar from './views/CommandTagBar';
+import ShellPathView from './views/ShellPathView';
 
 export default function CommandPage() {
   const dispatch = useAppDispatch();
@@ -63,6 +64,7 @@ export default function CommandPage() {
         // }}
         className={styles.column_container}
       >
+        <ShellPathView />
         <CommandTagBar />
         <div className={styles.main_content}>
           <CommandListView

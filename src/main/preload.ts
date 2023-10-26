@@ -2,6 +2,8 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
+import { EXECUTE_COMMAND, SET_SHELL_PATH } from './Constant';
+
 export type Channels = 'ipc-example';
 
 const electronHandler = {
@@ -22,7 +24,10 @@ const electronHandler = {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
     execCommand<T>(command: string) {
-      return ipcRenderer.invoke('exec-command', command) as Promise<T>;
+      return ipcRenderer.invoke(EXECUTE_COMMAND, command) as Promise<T>;
+    },
+    setShellPath(shellPath: string) {
+      ipcRenderer.send(SET_SHELL_PATH, shellPath);
     },
   },
   hostData: {
