@@ -6,12 +6,17 @@ import {
   MenuItemConstructorOptions,
   dialog,
   ipcMain,
+  IpcMainEvent,
 } from 'electron';
 
 import os from 'os';
 import fs from 'fs';
 
-import { GET_COMMAND_LIST, REPLY_COMMAND_LIST } from './Constant';
+import {
+  GET_COMMAND_LIST,
+  REPLY_COMMAND_LIST,
+  SHOW_COMMAND_LIST,
+} from './Constant';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -185,9 +190,15 @@ export default class MenuBuilder {
         label: '&File',
         submenu: [
           {
-            label: 'Export',
+            label: 'Export To File',
             click: () => {
               this.showExportDialog();
+            },
+          },
+          {
+            label: 'Export To Text',
+            click: () => {
+              this.mainWindow.webContents.send(SHOW_COMMAND_LIST);
             },
           },
           {
@@ -291,12 +302,20 @@ export default class MenuBuilder {
         if (result.canceled) return;
         const p = result.filePath;
         if (p) {
-          console.log('event names: ', ipcMain.eventNames());
-          ipcMain.on(REPLY_COMMAND_LIST, (event, arg: string) => {
-            if (arg) {
-              console.log(arg.length);
+          // console.log('event names: ', ipcMain.eventNames());
+
+          const replyListener = (event: IpcMainEvent, arg: string) => {
+            // event.
+            if (typeof arg === 'string' && arg.length) {
+              console.log('write json file ', p, arg.length);
+              fs.writeFileSync(p, arg);
+            } else {
+              console.log('arg wrong !');
             }
-          });
+
+            ipcMain.removeListener(REPLY_COMMAND_LIST, replyListener);
+          };
+          ipcMain.on(REPLY_COMMAND_LIST, replyListener);
           this.mainWindow.webContents.send(GET_COMMAND_LIST);
         }
         console.log('open directory result: ', result);
@@ -305,6 +324,26 @@ export default class MenuBuilder {
         console.log('open directory error ', err);
       });
   };
+
+  // showExportCommandTextDialog = () => {
+  //   const replyListener = (event: IpcMainEvent, arg: string) => {
+  //     // event.
+  //     if (typeof arg === 'string' && arg.length) {
+  //       dialog.showMessageBox(this.mainWindow, {
+  //         type: 'info',
+  //         message: 'Command Json Data',
+  //         detail: arg,
+  //         buttons: ['OK'],
+  //       });
+  //     } else {
+  //       console.log('arg wrong !');
+  //     }
+
+  //     ipcMain.removeListener(REPLY_COMMAND_LIST, replyListener);
+  //   };
+  //   ipcMain.on(REPLY_COMMAND_LIST, replyListener);
+  //   this.mainWindow.webContents.send(GET_COMMAND_LIST);
+  // };
 
   showAboutDialog = () => {
     const osInfo = `${os.type()} ${os.arch()} ${os.release()}`;

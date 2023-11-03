@@ -7,6 +7,7 @@ import {
   GET_COMMAND_LIST,
   REPLY_COMMAND_LIST,
   SET_SHELL_PATH,
+  SHOW_COMMAND_LIST,
 } from './Constant';
 
 export type Channels = 'ipc-example';
@@ -34,10 +35,13 @@ const electronHandler = {
     setShellPath(shellPath: string) {
       ipcRenderer.send(SET_SHELL_PATH, shellPath);
     },
-    sendCommandList(getCommandList: () => string) {
+    setRenderCommandList(getCommandList: () => string) {
       ipcRenderer.on(GET_COMMAND_LIST, (event) => {
         event.sender.send(REPLY_COMMAND_LIST, getCommandList());
       });
+    },
+    setShowCommandListTextCallback(showCommand: () => void) {
+      ipcRenderer.on(SHOW_COMMAND_LIST, showCommand);
     },
   },
   hostData: {

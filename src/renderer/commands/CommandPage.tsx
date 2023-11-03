@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { FloatButton } from 'antd';
@@ -17,6 +20,7 @@ import CommandResultView from './views/CommandResultView';
 import CommandTagModal from './views/CommandTagModal';
 import CommandTagBar from './views/CommandTagBar';
 import ShellPathView from './views/ShellPathView';
+import CommandListModal from './dialogs/CommandListModal';
 
 export default function CommandPage() {
   const dispatch = useAppDispatch();
@@ -25,6 +29,7 @@ export default function CommandPage() {
   const editKeyRef = useRef<string>();
 
   const [addVisible, setAddVisible] = useState(false);
+  const [commandListTextVisible, setCommandListTextVisible] = useState(false);
   const [initTag, setInitTag] = useState<string>();
   const [editTagModalVisible, setEditTagModalVisible] = useState(false);
 
@@ -35,7 +40,11 @@ export default function CommandPage() {
     //   console.log(list);
     //   dispatch(initCommands(list));
     // }
-    // window.electron.ipcRenderer.sendCommandList(() => )
+
+    window.electron.ipcRenderer.setShowCommandListTextCallback(() => {
+      setCommandListTextVisible(true);
+    });
+
     return () => {
       // second
     };
@@ -44,6 +53,10 @@ export default function CommandPage() {
   const dismissEditTagModal = () => {
     setEditTagModalVisible(false);
     editKeyRef.current = undefined;
+  };
+
+  const dismissCommandListTextDialog = () => {
+    setCommandListTextVisible(false);
   };
 
   const onTagOk = (text: string) => {
@@ -56,13 +69,13 @@ export default function CommandPage() {
   return (
     <div id="command-page" className={styles.root}>
       <div
-        // onClick={(event) => {
-        //   if (addVisible) {
-        //     setAddVisible(false);
-        //     event.preventDefault();
-        //     event.stopPropagation();
-        //   }
-        // }}
+        onClick={(event) => {
+          if (addVisible) {
+            setAddVisible(false);
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }}
         className={styles.column_container}
       >
         <ShellPathView />
@@ -100,12 +113,22 @@ export default function CommandPage() {
         />
       </FloatButton.Group>
 
-      <AddCommandView visible={addVisible} />
+      <AddCommandView
+        onAddConfirm={() => {
+          setAddVisible(false);
+        }}
+        visible={addVisible}
+      />
       <CommandTagModal
         onCancel={dismissEditTagModal}
         onOk={onTagOk}
         open={editTagModalVisible}
         initValue={initTag}
+      />
+      <CommandListModal
+        visible={commandListTextVisible}
+        onCancel={dismissCommandListTextDialog}
+        onOk={dismissCommandListTextDialog}
       />
     </div>
   );

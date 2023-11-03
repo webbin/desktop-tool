@@ -10,10 +10,11 @@ import { TAG_NONE } from '../../constants/Constant';
 
 interface Props {
   visible: boolean;
+  onAddConfirm: () => void;
 }
 
 export default function AddCommandView(props: Props) {
-  const { visible } = props;
+  const { visible, onAddConfirm } = props;
 
   const [title, setTitle] = useState('');
   const [tag, setTag] = useState('');
@@ -102,6 +103,7 @@ export default function AddCommandView(props: Props) {
         className={styles.add_button}
         onClick={() => {
           onAddCommand(command.trim(), title.trim(), tag);
+          onAddConfirm();
         }}
       >
         Add

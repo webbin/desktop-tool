@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useAppSelector } from '../../redux/hooks';
 import styles from './CommandListView.scss';
@@ -37,6 +37,16 @@ export default function CommandListView(props: Props) {
       return false;
     });
   }, [commandList, selectedTagList]);
+
+  useEffect(() => {
+    window.electron.ipcRenderer.setRenderCommandList(() => {
+      const l = commandList.map((item) => {
+        const { tag, title, command, key } = item;
+        return { tag, title, command, key };
+      });
+      return JSON.stringify(l);
+    });
+  }, [commandList]);
 
   console.log('command list render : ', commandList.length);
 
