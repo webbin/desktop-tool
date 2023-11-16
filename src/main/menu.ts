@@ -16,6 +16,7 @@ import {
   GET_COMMAND_LIST,
   REPLY_COMMAND_LIST,
   SHOW_COMMAND_LIST,
+  SHOW_IMPORT_COMMAND_LIST,
 } from './Constant';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -199,6 +200,12 @@ export default class MenuBuilder {
             label: 'Export To Text',
             click: () => {
               this.mainWindow.webContents.send(SHOW_COMMAND_LIST);
+            },
+          },
+          {
+            label: 'Import From Json Text',
+            click: () => {
+              this.mainWindow.webContents.send(SHOW_IMPORT_COMMAND_LIST);
             },
           },
           {

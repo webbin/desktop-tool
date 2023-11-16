@@ -8,6 +8,7 @@ import {
   REPLY_COMMAND_LIST,
   SET_SHELL_PATH,
   SHOW_COMMAND_LIST,
+  SHOW_IMPORT_COMMAND_LIST,
 } from './Constant';
 
 export type Channels = 'ipc-example';
@@ -42,6 +43,9 @@ const electronHandler = {
     },
     setShowCommandListTextCallback(showCommand: () => void) {
       ipcRenderer.on(SHOW_COMMAND_LIST, showCommand);
+    },
+    setShowImportCommandListCallback(showCommand: () => void) {
+      ipcRenderer.on(SHOW_IMPORT_COMMAND_LIST, showCommand);
     },
   },
   hostData: {

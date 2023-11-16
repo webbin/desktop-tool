@@ -14,17 +14,19 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 import commandList from './CommandListReducer';
 import commandInfo from './CommandInfoReducer';
 import commandResultList from './CommandResultList';
+import commandUseInfo from './CommandUseInfoReducer';
 
 const rootReducer = combineReducers({
   commandList,
   commandInfo,
   commandResultList,
+  commandUseInfo,
 });
 const persistedReducer = persistReducer(
   {
     key: 'root',
     storage,
-    whitelist: ['commandList'],
+    whitelist: ['commandList', 'commandUseInfo'],
   },
   rootReducer
 );

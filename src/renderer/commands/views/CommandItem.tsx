@@ -9,13 +9,14 @@ import {
   addExecResult,
   deleteCommand,
   updateCommand,
+  addCommandUse,
 } from '../../redux/actions';
 import styles from './CommandItem.scss';
 
 interface CommandItemProp {
   data: CommandData;
   index: number;
-  onItemEditTag: (index: number, data: CommandData) => void;
+  onItemEditTag: (data: CommandData) => void;
 }
 
 export default function CommandItem(props: CommandItemProp) {
@@ -57,7 +58,7 @@ export default function CommandItem(props: CommandItemProp) {
   };
 
   const onEditTag = () => {
-    onItemEditTag(index, data);
+    onItemEditTag(data);
   };
 
   const runCommand = () => {
@@ -71,6 +72,7 @@ export default function CommandItem(props: CommandItemProp) {
         dispatch(
           addExecResult({ timestamp: execTime, command: data.command, result })
         );
+        dispatch(addCommandUse(data.key));
       })
       .catch((err) => {
         setCommandRunning(false);
@@ -88,6 +90,7 @@ export default function CommandItem(props: CommandItemProp) {
 
   return (
     <div className={styles.container}>
+      <span className={styles.index_text}>{index + 1}</span>
       {editing ? (
         <input
           className={styles.title_input}

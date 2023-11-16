@@ -7,7 +7,7 @@ import { CommandData } from '../../types';
 import { TAG_NONE } from '../../constants/Constant';
 
 interface Props {
-  onItemEditTag: (index: number, data: CommandData) => void;
+  onItemEditTag: (data: CommandData) => void;
 }
 
 export default function CommandListView(props: Props) {
@@ -16,6 +16,7 @@ export default function CommandListView(props: Props) {
   const selectedTagList = useAppSelector(
     (store) => store.commandInfo.selectedTagList
   );
+  const usedInfo = useAppSelector((store) => store.commandUseInfo);
 
   const list = useMemo(() => {
     if (!selectedTagList.length) {
@@ -30,13 +31,30 @@ export default function CommandListView(props: Props) {
     selectedTagList.forEach((item) => {
       map[item] = true;
     });
-    return commandList.filter((item) => {
+    const filtedList = commandList.filter((item) => {
       if (item.tag && map[item.tag]) {
         return true;
       }
       return false;
     });
-  }, [commandList, selectedTagList]);
+
+    const listWithUseInfo = filtedList.map((item) => {
+      const { tag, title, command, key } = item;
+      const useCount = usedInfo[key] || 0;
+      return { tag, title, command, key, useCount };
+    });
+
+    const sortedList = listWithUseInfo.sort((a, b) => {
+      if (a.useCount > b.useCount) {
+        return -1;
+      }
+      if (a.useCount < b.useCount) {
+        return 1;
+      }
+      return 0;
+    });
+    return sortedList;
+  }, [commandList, selectedTagList, usedInfo]);
 
   useEffect(() => {
     window.electron.ipcRenderer.setRenderCommandList(() => {

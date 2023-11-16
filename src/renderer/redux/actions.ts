@@ -1,5 +1,6 @@
 import { actions as CommandListActions } from './CommandListReducer';
 import { actions as CommandInfoActions } from './CommandInfoReducer';
+import { actions as CommandUseInfoActions } from './CommandUseInfoReducer';
 
 const {
   updateCommand,
@@ -11,6 +12,7 @@ const {
 
 const { addSelectedTag, deleteSelectedTag, clearSeletedTags, setSeletedTags } =
   CommandInfoActions;
+const { addCommandUse, updateCommandUse } = CommandUseInfoActions;
 
 export {
   updateCommand,
@@ -22,5 +24,7 @@ export {
   deleteSelectedTag,
   clearSeletedTags,
   setSeletedTags,
+  addCommandUse,
+  updateCommandUse,
 };
 export { clearExecResult, addExecResult } from './CommandResultList';

@@ -1,25 +1,42 @@
+
+.index_text {
+  font-size: 18px;
+  padding: 10px 0px;
+  color: #fff;
+  width: 50px;
+  // height: 50px;
+  background-color: #7a2c9e;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  // z-index: 5;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   background-color: #ffac89;
   border-radius: 10px;
-  margin: 10px 20px;
   overflow: hidden;
   position: relative;
+  margin: 10px 20px;
 }
 
 .title {
   background-color: #fff;
   font-size: 18px;
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px 20px 10px 60px;
 }
 
 .title_input {
   background-color: #fff;
   font-size: 18px;
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px 20px 10px 60px;
   border-style: none;
 }
 

@@ -7,11 +7,7 @@ import { FloatButton } from 'antd';
 import { PlusCircleOutlined, ClearOutlined } from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import {
-  // initCommands,
-  clearExecResult,
-  updateCommandTagByKey,
-} from '../redux/actions';
+import { clearExecResult, updateCommandTagByKey } from '../redux/actions';
 import styles from './CommandPage.scss';
 
 import AddCommandView from './views/AddCommandView';
@@ -21,6 +17,7 @@ import CommandTagModal from './views/CommandTagModal';
 import CommandTagBar from './views/CommandTagBar';
 import ShellPathView from './views/ShellPathView';
 import CommandListModal from './dialogs/CommandListModal';
+import ImportCommandModal from './dialogs/ImportCommandModal';
 
 export default function CommandPage() {
   const dispatch = useAppDispatch();
@@ -30,19 +27,17 @@ export default function CommandPage() {
 
   const [addVisible, setAddVisible] = useState(false);
   const [commandListTextVisible, setCommandListTextVisible] = useState(false);
+  const [jsonTextAreaVisible, setJsonTextAreaVisible] = useState(false);
   const [initTag, setInitTag] = useState<string>();
   const [editTagModalVisible, setEditTagModalVisible] = useState(false);
 
   useEffect(() => {
-    // const list = getLocalCommandList();
-    // if (list) {
-    //   console.log('local command list: ');
-    //   console.log(list);
-    //   dispatch(initCommands(list));
-    // }
-
     window.electron.ipcRenderer.setShowCommandListTextCallback(() => {
       setCommandListTextVisible(true);
+    });
+
+    window.electron.ipcRenderer.setShowImportCommandListCallback(() => {
+      setJsonTextAreaVisible(true);
     });
 
     return () => {
@@ -82,7 +77,7 @@ export default function CommandPage() {
         <CommandTagBar />
         <div className={styles.main_content}>
           <CommandListView
-            onItemEditTag={(i: number, data) => {
+            onItemEditTag={(data) => {
               editKeyRef.current = data.key;
               setInitTag(data.tag || '');
               setEditTagModalVisible(true);
@@ -129,6 +124,15 @@ export default function CommandPage() {
         visible={commandListTextVisible}
         onCancel={dismissCommandListTextDialog}
         onOk={dismissCommandListTextDialog}
+      />
+      <ImportCommandModal
+        onCancel={() => {
+          setJsonTextAreaVisible(false);
+        }}
+        onOk={() => {
+          setJsonTextAreaVisible(false);
+        }}
+        visible={jsonTextAreaVisible}
       />
     </div>
   );

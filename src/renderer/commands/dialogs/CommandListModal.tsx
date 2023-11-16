@@ -1,5 +1,5 @@
 import { Modal } from 'antd';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAppSelector } from 'renderer/redux/hooks';
 
 import styles from './CommandListModal.scss';
@@ -12,9 +12,15 @@ type Props = {
 
 export default function CommandListModal(props: Props) {
   const { visible, onCancel, onOk } = props;
-  const str = useAppSelector((store) =>
-    JSON.stringify(store.commandList, undefined, '\n\n')
-  );
+
+  const commandList = useAppSelector((store) => store.commandList);
+
+  const str = useMemo(() => {
+    return JSON.stringify(commandList, undefined, 4);
+  }, [commandList]);
+
+  // console.log(' command List json text: ', str);
+
   return (
     <Modal
       open={visible}
@@ -25,7 +31,9 @@ export default function CommandListModal(props: Props) {
       title="Command List Json String"
       className={styles.modal_root}
     >
-      <div style={{ height: 400, overflowY: 'scroll' }}>{str}</div>
+      <div className={styles.json_text_container}>
+        <span>{str}</span>
+      </div>
     </Modal>
   );
 }

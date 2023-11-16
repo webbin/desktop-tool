@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 // import { setExecResult } from '../../redux/actions';
 import { useAppSelector } from '../../redux/hooks';
@@ -8,6 +8,8 @@ import TimeUtil from '../../utils/TimeUtil';
 
 export default function CommandResultView() {
   const list = useAppSelector((store) => store.commandResultList);
+  const listCountRef = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const displayList = useMemo(() => {
     return list.map((item) => {
@@ -22,8 +24,22 @@ export default function CommandResultView() {
     });
   }, [list]);
 
+  useEffect(() => {
+    if (list.length > listCountRef.current) {
+      const element = containerRef.current;
+      if (element) {
+        // element.scrollTop = element.scrollHeight;
+        element.scrollTo({
+          behavior: 'smooth',
+          top: element.scrollHeight,
+        });
+      }
+    }
+    listCountRef.current = list.length;
+  }, [list]);
+
   return (
-    <div className={styles.root}>
+    <div ref={containerRef} className={styles.root}>
       {/* <p className={styles.title}>命令执行结果</p> */}
       {displayList.map((item, index) => {
         const { command, result, timeString } = item;

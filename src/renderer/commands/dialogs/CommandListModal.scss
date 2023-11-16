@@ -3,3 +3,34 @@
   height: 70%;
   width: 50%;
 }
+
+.json_text_container {
+  height: 400px;
+  overflow-y: scroll;
+  background-color: #333;
+  border-radius: 6px;
+}
+
+.json_text_container span {
+  color: #fff;
+  white-space: pre-wrap;
+  padding: 10px;
+  display: block;
+  // text-indent: 10px;
+}
+
+.json_input {
+  height: 400px;
+  margin: 0%;
+  width: 90%;
+  resize: none;
+  font-family: inherit;
+  border: none;
+  display: block;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.json_input:focus {
+  // outline: none;
+}
