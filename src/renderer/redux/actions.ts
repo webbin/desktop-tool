@@ -10,8 +10,13 @@ const {
   deleteCommand,
 } = CommandListActions;
 
-const { addSelectedTag, deleteSelectedTag, clearSeletedTags, setSeletedTags } =
-  CommandInfoActions;
+const {
+  addSelectedTag,
+  deleteSelectedTag,
+  clearSeletedTags,
+  setSeletedTags,
+  putSearchCommand,
+} = CommandInfoActions;
 const { addCommandUse, updateCommandUse } = CommandUseInfoActions;
 
 export {
@@ -24,6 +29,7 @@ export {
   deleteSelectedTag,
   clearSeletedTags,
   setSeletedTags,
+  putSearchCommand,
   addCommandUse,
   updateCommandUse,
 };

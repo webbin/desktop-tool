@@ -1,9 +1,11 @@
+.root {
+
+}
 .container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   padding: 10px 20px;
-  padding-bottom: 0;
 }
 
 .command_tag {
@@ -21,4 +23,16 @@
 
 .command_tag:last-child {
   margin-right: 0;
+}
+
+.command_tag_selected:hover {
+  background-color: #fe4365;
+  color: #fff;
+}
+
+.search_bar {
+  width: 300px;
+  margin: 0 20px;
+  margin-bottom: 10px;
+  border-width: 0;
 }

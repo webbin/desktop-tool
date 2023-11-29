@@ -11,4 +11,13 @@ type CommandResultInfo = {
   timestamp: number;
 };
 
-export { CommandData, CommandResultInfo };
+type CommandSearchInfo = {
+  keyword: string;
+  tag: string;
+};
+
+type CommandSearchMap = {
+  [key: string]: CommandSearchInfo;
+};
+
+export { CommandData, CommandResultInfo, CommandSearchInfo, CommandSearchMap };

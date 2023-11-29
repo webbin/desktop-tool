@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-// import { CommandData } from '../types';
+import { CommandSearchMap, CommandSearchInfo } from '../types';
 
 type CommandInfo = {
   execResult: string;
   selectedTagList: string[];
+  commandSearchMap?: CommandSearchMap;
 };
 
 const InitialState: CommandInfo = {
@@ -35,6 +36,19 @@ const slice = createSlice({
       if (index >= 0) {
         state.selectedTagList.splice(index, 1);
       }
+    },
+    putSearchCommand: (
+      state,
+      action: PayloadAction<{
+        key: string;
+        data: CommandSearchInfo;
+      }>
+    ) => {
+      const { key, data } = action.payload;
+      if (!state.commandSearchMap) {
+        state.commandSearchMap = {};
+      }
+      state.commandSearchMap[key] = data;
     },
   },
 });

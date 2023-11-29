@@ -34,4 +34,18 @@ function execCommandSync(command: string) {
   return res;
 }
 
-export { execCommand, execCommandSync, setShellPath };
+function execCommandAsync(command: string) {
+  return new Promise((resolve, reject) => {
+    exec(command, { ...options, encoding: 'buffer' }, (err, res) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      // console.log('exec command async , result ', res);
+      const str = iconv.decode(res, 'cp936');
+      resolve(str);
+    });
+  });
+}
+
+export { execCommand, execCommandAsync, execCommandSync, setShellPath };

@@ -10,6 +10,14 @@ interface Props {
   onItemEditTag: (data: CommandData) => void;
 }
 
+function commandMatchKeyword(keyword: string, command: CommandData) {
+  const { command: text, tag } = command;
+  return (
+    text.toLowerCase().includes(keyword.toLowerCase()) ||
+    tag?.toLowerCase().includes(keyword.toLowerCase())
+  );
+}
+
 export default function CommandListView(props: Props) {
   const { onItemEditTag } = props;
   const commandList = useAppSelector((store) => store.commandList);
@@ -17,6 +25,14 @@ export default function CommandListView(props: Props) {
     (store) => store.commandInfo.selectedTagList
   );
   const usedInfo = useAppSelector((store) => store.commandUseInfo);
+  const searchKey = useAppSelector((store) => {
+    const { selectedTagList: tagList, commandSearchMap } = store.commandInfo;
+    const [tag] = tagList;
+    if (commandSearchMap && commandSearchMap[tag]) {
+      return commandSearchMap[tag].keyword;
+    }
+    return '';
+  });
 
   const list = useMemo(() => {
     if (!selectedTagList.length) {
@@ -33,6 +49,9 @@ export default function CommandListView(props: Props) {
     });
     const filtedList = commandList.filter((item) => {
       if (item.tag && map[item.tag]) {
+        if (searchKey) {
+          return commandMatchKeyword(searchKey, item);
+        }
         return true;
       }
       return false;
@@ -54,7 +73,7 @@ export default function CommandListView(props: Props) {
       return 0;
     });
     return sortedList;
-  }, [commandList, selectedTagList, usedInfo]);
+  }, [commandList, selectedTagList, usedInfo, searchKey]);
 
   useEffect(() => {
     window.electron.ipcRenderer.setRenderCommandList(() => {

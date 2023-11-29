@@ -15,7 +15,7 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { EXECUTE_COMMAND, SET_SHELL_PATH } from './Constant';
-import { execCommandSync, setShellPath } from './childprocess/childprocess';
+import { execCommandAsync, setShellPath } from './childprocess/childprocess';
 
 // class AppUpdater {
 //   constructor() {
@@ -33,8 +33,8 @@ let mainWindow: BrowserWindow | null = null;
 //   event.reply('ipc-example', msgTemplate('pong'));
 // });
 
-ipcMain.handle(EXECUTE_COMMAND, (event, command) => {
-  const res = execCommandSync(command);
+ipcMain.handle(EXECUTE_COMMAND, async (event, command) => {
+  const res = await execCommandAsync(command);
   return res;
 });
 

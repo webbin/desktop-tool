@@ -9,6 +9,7 @@ import {
   SET_SHELL_PATH,
   SHOW_COMMAND_LIST,
   SHOW_IMPORT_COMMAND_LIST,
+  TOGGLE_COMMAND_FILTER,
 } from './Constant';
 
 export type Channels = 'ipc-example';
@@ -46,6 +47,9 @@ const electronHandler = {
     },
     setShowImportCommandListCallback(showCommand: () => void) {
       ipcRenderer.on(SHOW_IMPORT_COMMAND_LIST, showCommand);
+    },
+    setToggleCommandFilterCallback(toggleCommand: () => void) {
+      ipcRenderer.on(TOGGLE_COMMAND_FILTER, toggleCommand);
     },
   },
   hostData: {

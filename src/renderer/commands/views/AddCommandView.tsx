@@ -82,7 +82,7 @@ export default function AddCommandView(props: Props) {
       />
       <span>Title:</span>
       <input
-        maxLength={15}
+        maxLength={30}
         value={title}
         onChange={(event) => {
           setTitle(event.target.value);

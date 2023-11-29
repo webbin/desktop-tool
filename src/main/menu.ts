@@ -15,6 +15,7 @@ import fs from 'fs';
 import {
   GET_COMMAND_LIST,
   REPLY_COMMAND_LIST,
+  TOGGLE_COMMAND_FILTER,
   SHOW_COMMAND_LIST,
   SHOW_IMPORT_COMMAND_LIST,
 } from './Constant';
@@ -219,6 +220,24 @@ export default class MenuBuilder {
               this.mainWindow.close();
             },
           },
+        ],
+      },
+      {
+        label: '&Edit',
+        submenu: [
+          {
+            label: '&Filter',
+            accelerator: 'Ctrl+F',
+            // selector: 'undo:'
+            click: () => {
+              this.mainWindow.webContents.send(TOGGLE_COMMAND_FILTER);
+            },
+          },
+          // { label: '&Undo', accelerator: 'Ctrl+Z', selector: 'undo:' },
+          // { label: '&Redo', accelerator: 'Shift+Ctrl+Z', selector: 'redo:' },
+          // { type: 'separator' },
+          // { label: '&Cut', accelerator: 'Ctrl+X', selector: 'cut:' },
+          // { label: 'Copy', accelerator: 'Ctrl+C', selector: 'copy:' },
         ],
       },
       {

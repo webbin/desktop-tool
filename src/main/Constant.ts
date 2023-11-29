@@ -9,3 +9,7 @@ export const REPLY_COMMAND_LIST = 'reply-command-list';
 export const SHOW_COMMAND_LIST = 'show-command-list';
 
 export const SHOW_IMPORT_COMMAND_LIST = 'show-import-command-list';
+
+export const SHOW_COMMAND_FILTER = 'show-command-filter';
+
+export const TOGGLE_COMMAND_FILTER = 'toggle-command-filter';

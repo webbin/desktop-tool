@@ -4,7 +4,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { FloatButton } from 'antd';
-import { PlusCircleOutlined, ClearOutlined } from '@ant-design/icons';
+import {
+  PlusCircleOutlined,
+  FilterOutlined,
+  ClearOutlined,
+} from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { clearExecResult, updateCommandTagByKey } from '../redux/actions';
@@ -26,6 +30,7 @@ export default function CommandPage() {
   const editKeyRef = useRef<string>();
 
   const [addVisible, setAddVisible] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
   const [commandListTextVisible, setCommandListTextVisible] = useState(false);
   const [jsonTextAreaVisible, setJsonTextAreaVisible] = useState(false);
   const [initTag, setInitTag] = useState<string>();
@@ -38,6 +43,10 @@ export default function CommandPage() {
 
     window.electron.ipcRenderer.setShowImportCommandListCallback(() => {
       setJsonTextAreaVisible(true);
+    });
+
+    window.electron.ipcRenderer.setToggleCommandFilterCallback(() => {
+      setFilterVisible((v) => !v);
     });
 
     return () => {
@@ -74,7 +83,7 @@ export default function CommandPage() {
         className={styles.column_container}
       >
         <ShellPathView />
-        <CommandTagBar />
+        <CommandTagBar showFilter={filterVisible} />
         <div className={styles.main_content}>
           <CommandListView
             onItemEditTag={(data) => {
@@ -104,6 +113,14 @@ export default function CommandPage() {
           onClick={() => {
             console.log('show add');
             setAddVisible((old) => !old);
+          }}
+        />
+
+        <FloatButton
+          tooltip="Command Filter"
+          icon={<FilterOutlined />}
+          onClick={() => {
+            // setAddVisible((old) => !old);
           }}
         />
       </FloatButton.Group>
