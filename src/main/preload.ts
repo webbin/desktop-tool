@@ -11,6 +11,7 @@ import {
   SHOW_COMMAND_LIST,
   SHOW_IMPORT_COMMAND_LIST,
   TOGGLE_COMMAND_FILTER,
+  CHOOSE_SHELL_PATH,
 } from './Constant';
 
 export type Channels = 'ipc-example';
@@ -34,6 +35,9 @@ const electronHandler = {
     },
     execCommand<T>(command: string) {
       return ipcRenderer.invoke(EXECUTE_COMMAND, command) as Promise<T>;
+    },
+    showChooseShellPath() {
+      return ipcRenderer.invoke(CHOOSE_SHELL_PATH) as Promise<string>;
     },
     setShellPath(shellPath: string) {
       ipcRenderer.send(SET_SHELL_PATH, shellPath);

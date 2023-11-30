@@ -9,13 +9,14 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, shell, ipcMain } from 'electron';
 // import { autoUpdater } from 'electron-updater';
 // import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { EXECUTE_COMMAND, SET_SHELL_PATH } from './Constant';
+import { EXECUTE_COMMAND, SET_SHELL_PATH, CHOOSE_SHELL_PATH } from './Constant';
 import { execCommandAsync, setShellPath } from './childprocess/childprocess';
+import { platform } from 'os';
 
 // class AppUpdater {
 //   constructor() {
@@ -36,6 +37,29 @@ let mainWindow: BrowserWindow | null = null;
 ipcMain.handle(EXECUTE_COMMAND, async (event, command) => {
   const res = await execCommandAsync(command);
   return res;
+});
+
+ipcMain.handle(CHOOSE_SHELL_PATH, async (event, arg) => {
+  const defaultPath = app.getPath('home');
+  // user data path:  C:\Users\weibin2.zheng\AppData\Roaming\Electron
+  // session data path:  C:\Users\weibin2.zheng\AppData\Roaming\Electron
+  // app data path:  C:\Users\weibin2.zheng\AppData\Roaming
+  // console.log('user data path: ', app.getPath('userData'));
+  // console.log('session data path: ', app.getPath('sessionData'));
+  // console.log('app data path: ', app.getPath('appData'));
+  // if (process.platform === 'win32') {
+  //   defaultPath = app.getPath('exe');
+  // }
+  const res = await dialog.showOpenDialog({
+    title: 'Choose Shell Path',
+    defaultPath,
+    // filters: [{ extensions: ['json'], name: 'json' }],
+  });
+
+  if (res.canceled) {
+    return undefined;
+  }
+  return res.filePaths[0];
 });
 
 ipcMain.on(SET_SHELL_PATH, (event, arg) => {

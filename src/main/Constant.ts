@@ -1,5 +1,7 @@
 export const SET_SHELL_PATH = 'set-shell-path';
 
+export const CHOOSE_SHELL_PATH = 'choose-shell-path';
+
 export const EXECUTE_COMMAND = 'exec-command';
 
 export const GET_COMMAND_LIST = 'get-command-list';

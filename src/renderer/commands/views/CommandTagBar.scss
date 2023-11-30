@@ -2,10 +2,14 @@
 
 }
 .container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: block;
+  // flex-direction: row;
+  // flex-wrap: wrap;
   padding: 10px 20px;
+}
+
+.container:nth-child(1) {
+  padding-bottom: 0px;
 }
 
 .command_tag {

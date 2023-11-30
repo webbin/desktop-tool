@@ -243,9 +243,6 @@ export default class MenuBuilder {
           },
           // { label: '&Undo', accelerator: 'Ctrl+Z', selector: 'undo:' },
           // { label: '&Redo', accelerator: 'Shift+Ctrl+Z', selector: 'redo:' },
-          // { type: 'separator' },
-          // { label: '&Cut', accelerator: 'Ctrl+X', selector: 'cut:' },
-          // { label: 'Copy', accelerator: 'Ctrl+C', selector: 'copy:' },
         ],
       },
       {

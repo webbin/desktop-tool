@@ -19,6 +19,7 @@ const {
   putSearchCommand,
   addRunningCommand,
   deleteRunningCommand,
+  addRecentRunCommand,
 } = CommandInfoActions;
 const { addCommandUse, updateCommandUse } = CommandUseInfoActions;
 const { updateExecResult, addExecResult, clearExecResult } =
@@ -30,6 +31,8 @@ export {
   initCommands,
   addCommand,
   deleteCommand,
+
+  //
   addSelectedTag,
   deleteSelectedTag,
   clearSeletedTags,
@@ -39,6 +42,7 @@ export {
   addRunningCommand,
   deleteRunningCommand,
   updateCommandUse,
+  addRecentRunCommand,
 
   //
   updateExecResult,

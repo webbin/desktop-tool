@@ -4,7 +4,7 @@ import { useAppSelector } from '../../redux/hooks';
 import styles from './CommandListView.scss';
 import CommandItem from './CommandItem';
 import { CommandData } from '../../types';
-import { TAG_NONE } from '../../constants/Constant';
+import { TAG_NONE, TAG_RECENT } from '../../constants/Constant';
 
 interface Props {
   onItemEditTag: (data: CommandData) => void;
@@ -33,6 +33,7 @@ export default function CommandListView(props: Props) {
     }
     return '';
   });
+  const recentList = useAppSelector((store) => store.commandInfo.recentRunList);
 
   const list = useMemo(() => {
     if (!selectedTagList.length) {
@@ -42,6 +43,13 @@ export default function CommandListView(props: Props) {
       return commandList.filter((item) => {
         return !item.tag;
       });
+    }
+    if (selectedTagList[0] === TAG_RECENT) {
+      const commandBook: { [key: string]: CommandData } = {};
+      commandList.forEach((item) => {
+        commandBook[item.key] = item;
+      });
+      return recentList.map((item) => commandBook[item]);
     }
     const map: { [key: string]: boolean } = {};
     selectedTagList.forEach((item) => {
@@ -73,7 +81,7 @@ export default function CommandListView(props: Props) {
       return 0;
     });
     return sortedList;
-  }, [commandList, selectedTagList, usedInfo, searchKey]);
+  }, [commandList, selectedTagList, usedInfo, searchKey, recentList]);
 
   useEffect(() => {
     window.electron.ipcRenderer.setRenderCommandList(() => {

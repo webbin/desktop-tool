@@ -65,8 +65,8 @@
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  margin: 10px 20px;
-  justify-content: space-around;
+  margin: 10px 0px;
+  justify-content: flex-end;
 }
 
 .button:nth-child(2) {
@@ -75,8 +75,8 @@
 }
 
 .button {
-  flex: 1;
-  font-size: 14px;
+  // flex: 1;
+  // font-size: 14px;
 }
 
 .option_button_container {

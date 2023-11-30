@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
+import {
+  DeleteOutlined,
+  FormOutlined,
+  CaretRightFilled,
+  CheckOutlined,
+  CloseOutlined,
+} from '@ant-design/icons';
 
 import { CommandData } from '../../types';
 import AutoTextArea from '../../components/AutoTextArea';
@@ -13,6 +19,7 @@ import {
   addCommandUse,
   addRunningCommand,
   deleteRunningCommand,
+  addRecentRunCommand,
 } from '../../redux/actions';
 import styles from './CommandItem.scss';
 
@@ -69,6 +76,7 @@ export default function CommandItem(props: CommandItemProp) {
 
   const runCommand = () => {
     dispatch(addRunningCommand(data.key));
+    dispatch(addRecentRunCommand(data.key));
     const execTime = Date.now();
     dispatch(
       addExecResult({
@@ -157,34 +165,46 @@ export default function CommandItem(props: CommandItemProp) {
       <div className={styles.button_row}>
         {editing ? (
           <>
-            <button
-              className={styles.button}
-              type="button"
-              onClick={onCancelEdit}
-            >
-              取消
-            </button>
-            <button
-              className={styles.button}
-              type="button"
-              onClick={onConfirmEdit}
-            >
-              确认
-            </button>
+            <Tooltip placement="top" title="取消">
+              <Button
+                className={styles.button}
+                onClick={onCancelEdit}
+                icon={<CloseOutlined />}
+                // type="primary"
+                shape="circle"
+              />
+            </Tooltip>
+            <Tooltip placement="top" title="确认">
+              <Button
+                className={styles.button}
+                onClick={onConfirmEdit}
+                icon={<CheckOutlined />}
+                // type="primary"
+                shape="circle"
+              />
+            </Tooltip>
           </>
         ) : (
           <>
-            <Button className={styles.button} type="primary" onClick={onEdit}>
-              编辑
-            </Button>
-            <Button
-              loading={commandRunning}
-              className={styles.button}
-              type="primary"
-              onClick={runCommand}
-            >
-              执行
-            </Button>
+            <Tooltip placement="top" title="编辑">
+              <Button
+                className={styles.button}
+                onClick={onEdit}
+                icon={<FormOutlined />}
+                // type="primary"
+                shape="circle"
+              />
+            </Tooltip>
+            <Tooltip placement="top" title="执行">
+              <Button
+                loading={commandRunning}
+                className={styles.button}
+                onClick={runCommand}
+                icon={<CaretRightFilled />}
+                // type="primary"
+                shape="circle"
+              />
+            </Tooltip>
           </>
         )}
       </div>

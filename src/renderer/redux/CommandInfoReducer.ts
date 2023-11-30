@@ -7,6 +7,7 @@ type CommandInfo = {
   selectedTagList: string[];
   commandSearchMap: CommandSearchMap;
   runningKeyList: string[];
+  recentRunList: string[];
 };
 
 const InitialState: CommandInfo = {
@@ -14,6 +15,7 @@ const InitialState: CommandInfo = {
   selectedTagList: [],
   commandSearchMap: {},
   runningKeyList: [],
+  recentRunList: [],
 };
 
 const slice = createSlice({
@@ -60,6 +62,16 @@ const slice = createSlice({
       if (index >= 0) {
         state.runningKeyList.splice(index, 1);
       }
+    },
+    addRecentRunCommand(state, action: PayloadAction<string>) {
+      const index = state.recentRunList.indexOf(action.payload);
+      if (index >= 0) {
+        state.recentRunList.splice(index, 1);
+      }
+      if (state.recentRunList.length >= 10) {
+        state.recentRunList.pop();
+      }
+      state.recentRunList.unshift(action.payload);
     },
   },
 });

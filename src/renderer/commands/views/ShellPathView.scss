@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 10px 20px;
+  padding: 10px 20px 0 20px;
 }
 
 .row {
@@ -12,17 +12,33 @@
 
 .shell {
   flex: 1;
-  height: 30px;
+  // height: 30px;
   font-size: 18px;
   color: #000;
-  font-family: inherit;
-  margin-right: 40px;
-  border-radius: 10px;
-  border-style: solid;
-  border-color: #666;
-  border-width: 2px;
+  // border-radius: 10px;
+  // border-style: solid;
+  // border-color: #666;
+  // border-width: 2px;
   padding: 5px 12px;
-  text-align: center;
+  // text-align: center;
+}
+
+.shell_span {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  font-family: inherit;
+  margin-right: 10px;
+}
+
+.shell_folder_button {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shell_folder_button:hover {
+  color: aliceblue;
 }
 
 .input {
