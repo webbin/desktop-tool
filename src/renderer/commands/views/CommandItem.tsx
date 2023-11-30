@@ -4,12 +4,15 @@ import { DeleteOutlined } from '@ant-design/icons';
 
 import { CommandData } from '../../types';
 import AutoTextArea from '../../components/AutoTextArea';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   addExecResult,
+  updateExecResult,
   deleteCommand,
   updateCommand,
   addCommandUse,
+  addRunningCommand,
+  deleteRunningCommand,
 } from '../../redux/actions';
 import styles from './CommandItem.scss';
 
@@ -23,10 +26,13 @@ export default function CommandItem(props: CommandItemProp) {
   const dispatch = useAppDispatch();
   const { data, index, onItemEditTag } = props;
 
+  const commandRunning = useAppSelector((state) =>
+    state.commandInfo.runningKeyList.includes(data.key)
+  );
+
   const [editTitle, setEditTitle] = useState(data.title);
   const [editCommand, setEditCommand] = useState(data.command);
   const [editing, setEditing] = useState(false);
-  const [commandRunning, setCommandRunning] = useState(false);
 
   const tagName = data.tag || 'Add Tag';
 
@@ -62,27 +68,42 @@ export default function CommandItem(props: CommandItemProp) {
   };
 
   const runCommand = () => {
-    setCommandRunning(true);
+    dispatch(addRunningCommand(data.key));
     const execTime = Date.now();
+    dispatch(
+      addExecResult({
+        startTimestamp: execTime,
+        endTimestamp: 0,
+        command: data.command,
+        result: '',
+        running: true,
+      })
+    );
     window.electron.ipcRenderer
       .execCommand<string>(data.command)
       .then((result) => {
-        setCommandRunning(false);
+        dispatch(deleteRunningCommand(data.key));
         console.log('command result: ', result);
         dispatch(
-          addExecResult({ timestamp: execTime, command: data.command, result })
+          updateExecResult({
+            startTimestamp: execTime,
+            endTimestamp: Date.now(),
+            result: result.trim(),
+            running: false,
+          })
         );
         dispatch(addCommandUse(data.key));
       })
       .catch((err) => {
-        setCommandRunning(false);
+        dispatch(deleteRunningCommand(data.key));
         // console.log('command error: ', err);
         const res = err.message || err.msg || String(err);
         dispatch(
-          addExecResult({
-            timestamp: execTime,
-            command: data.command,
+          updateExecResult({
+            startTimestamp: execTime,
+            endTimestamp: Date.now(),
             result: res,
+            running: false,
           })
         );
       });

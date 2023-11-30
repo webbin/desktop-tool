@@ -4,11 +4,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { FloatButton } from 'antd';
-import {
-  PlusCircleOutlined,
-  FilterOutlined,
-  ClearOutlined,
-} from '@ant-design/icons';
+import { PlusCircleOutlined, ClearOutlined } from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { clearExecResult, updateCommandTagByKey } from '../redux/actions';
@@ -47,6 +43,10 @@ export default function CommandPage() {
 
     window.electron.ipcRenderer.setToggleCommandFilterCallback(() => {
       setFilterVisible((v) => !v);
+    });
+
+    window.electron.ipcRenderer.setToggleAddCommandCallback(() => {
+      setAddVisible((v) => !v);
     });
 
     return () => {
@@ -113,14 +113,6 @@ export default function CommandPage() {
           onClick={() => {
             console.log('show add');
             setAddVisible((old) => !old);
-          }}
-        />
-
-        <FloatButton
-          tooltip="Command Filter"
-          icon={<FilterOutlined />}
-          onClick={() => {
-            // setAddVisible((old) => !old);
           }}
         />
       </FloatButton.Group>

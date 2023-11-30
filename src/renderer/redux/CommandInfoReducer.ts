@@ -5,12 +5,15 @@ import { CommandSearchMap, CommandSearchInfo } from '../types';
 type CommandInfo = {
   execResult: string;
   selectedTagList: string[];
-  commandSearchMap?: CommandSearchMap;
+  commandSearchMap: CommandSearchMap;
+  runningKeyList: string[];
 };
 
 const InitialState: CommandInfo = {
   execResult: '',
   selectedTagList: [],
+  commandSearchMap: {},
+  runningKeyList: [],
 };
 
 const slice = createSlice({
@@ -45,10 +48,18 @@ const slice = createSlice({
       }>
     ) => {
       const { key, data } = action.payload;
-      if (!state.commandSearchMap) {
-        state.commandSearchMap = {};
-      }
       state.commandSearchMap[key] = data;
+    },
+    addRunningCommand(state, action: PayloadAction<string>) {
+      state.runningKeyList.push(action.payload);
+    },
+    deleteRunningCommand(state, action: PayloadAction<string>) {
+      const index = state.runningKeyList.findIndex(
+        (item) => action.payload === item
+      );
+      if (index >= 0) {
+        state.runningKeyList.splice(index, 1);
+      }
     },
   },
 });

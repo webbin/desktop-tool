@@ -45,6 +45,7 @@ const store = configureStore({
 const persistor = persistStore(store, {}, () => {
   console.log('-------persitor----------');
   console.log('rehydration is finished');
+  console.log(store.getState());
   console.log('-------persitor----------');
 });
 

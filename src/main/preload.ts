@@ -7,6 +7,7 @@ import {
   GET_COMMAND_LIST,
   REPLY_COMMAND_LIST,
   SET_SHELL_PATH,
+  SHOW_ADD_COMMAND,
   SHOW_COMMAND_LIST,
   SHOW_IMPORT_COMMAND_LIST,
   TOGGLE_COMMAND_FILTER,
@@ -50,6 +51,9 @@ const electronHandler = {
     },
     setToggleCommandFilterCallback(toggleCommand: () => void) {
       ipcRenderer.on(TOGGLE_COMMAND_FILTER, toggleCommand);
+    },
+    setToggleAddCommandCallback(toggleAddCommand: () => void) {
+      ipcRenderer.on(SHOW_ADD_COMMAND, toggleAddCommand);
     },
   },
   hostData: {

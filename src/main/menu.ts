@@ -18,6 +18,7 @@ import {
   TOGGLE_COMMAND_FILTER,
   SHOW_COMMAND_LIST,
   SHOW_IMPORT_COMMAND_LIST,
+  SHOW_ADD_COMMAND,
 } from './Constant';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -191,6 +192,13 @@ export default class MenuBuilder {
       {
         label: '&File',
         submenu: [
+          {
+            label: 'Add Command',
+            accelerator: 'Ctrl+N',
+            click: () => {
+              this.mainWindow.webContents.send(SHOW_ADD_COMMAND);
+            },
+          },
           {
             label: 'Export To File',
             click: () => {

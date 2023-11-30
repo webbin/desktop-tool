@@ -12,6 +12,15 @@ const slice = createSlice({
     addExecResult(state, action: PayloadAction<CommandResultInfo>) {
       state.push(action.payload);
     },
+    updateExecResult(state, action: PayloadAction<Partial<CommandResultInfo>>) {
+      const index = state.findIndex(
+        (item) => item.startTimestamp === action.payload.startTimestamp
+      );
+      if (index !== -1) {
+        const old = state[index];
+        state[index] = { ...old, ...action.payload };
+      }
+    },
     clearExecResult() {
       return [];
     },
@@ -19,5 +28,5 @@ const slice = createSlice({
 });
 
 export default slice.reducer;
-const { clearExecResult, addExecResult } = slice.actions;
-export { clearExecResult, addExecResult };
+const { actions } = slice;
+export { actions };

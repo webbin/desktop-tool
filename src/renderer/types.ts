@@ -8,7 +8,9 @@ type CommandData = {
 type CommandResultInfo = {
   command: string;
   result: string;
-  timestamp: number;
+  startTimestamp: number;
+  endTimestamp: number;
+  running: boolean;
 };
 
 type CommandSearchInfo = {

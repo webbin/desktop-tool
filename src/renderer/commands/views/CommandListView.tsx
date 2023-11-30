@@ -85,7 +85,7 @@ export default function CommandListView(props: Props) {
     });
   }, [commandList]);
 
-  console.log('command list render : ', commandList.length);
+  // console.log('command list render : ', commandList.length);
 
   return (
     <div className={styles.root}>
