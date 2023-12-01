@@ -15,6 +15,11 @@
 .command_tag {
   margin-right: 20px;
   margin-top: 10px;
+  user-select: none;
+  font-size: 14px;
+  padding: 4px 10px;
+  background-color: #fff;
+  color: #222;
   // margin-bottom: 10px;
 }
 
@@ -29,7 +34,7 @@
   margin-right: 0;
 }
 
-.command_tag_selected:hover {
+.command_tag:hover {
   background-color: #fe4365;
   color: #fff;
 }

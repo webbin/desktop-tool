@@ -2,7 +2,7 @@
 /* eslint-disable no-lonely-if */
 /* eslint-disable react/no-array-index-key */
 import React, { useMemo, useRef, useEffect } from 'react';
-import { Button, Input, InputRef } from 'antd';
+import { Button, Tag, Input, InputRef } from 'antd';
 import classnames from 'classnames';
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
@@ -16,7 +16,7 @@ import {
 import { TAG_ALL, TAG_NONE, TAG_RECENT } from '../../constants/Constant';
 
 const { Search } = Input;
-
+const { CheckableTag } = Tag;
 type CommandTagItemProps = {
   tag: string;
   // index: number;
@@ -34,28 +34,43 @@ function CommandTagItem(props: CommandTagItemProps) {
     return selectedTagList.indexOf(tag) >= 0;
   }, [selectedTagList, tag]);
 
+  // return (
+  //   <Button
+
+  //     onClick={() => {
+  //     }}
+  //     type="default"
+  //   >
+  //     {tag}
+  //   </Button>
+  // );
+
+  const onTagChange = (checked: boolean) => {
+    console.log(' tag ', tag, ', checked ? ', checked);
+
+    if (tag === TAG_ALL) {
+      dispatch(clearSeletedTags());
+    } else if (tag === TAG_NONE || tag === TAG_RECENT) {
+      dispatch(setSeletedTags([tag]));
+    } else {
+      if (tagSelected) {
+        dispatch(deleteSelectedTag(tag));
+      } else {
+        dispatch(setSeletedTags([tag]));
+      }
+    }
+  };
+
   return (
-    <Button
+    <CheckableTag
       className={classnames(styles.command_tag, {
         [styles.command_tag_selected]: tagSelected,
       })}
-      onClick={() => {
-        if (tag === TAG_ALL) {
-          dispatch(clearSeletedTags());
-        } else if (tag === TAG_NONE || tag === TAG_RECENT) {
-          dispatch(setSeletedTags([tag]));
-        } else {
-          if (tagSelected) {
-            dispatch(deleteSelectedTag(tag));
-          } else {
-            dispatch(setSeletedTags([tag]));
-          }
-        }
-      }}
-      type="default"
+      checked={tagSelected}
+      onChange={onTagChange}
     >
       {tag}
-    </Button>
+    </CheckableTag>
   );
 }
 
