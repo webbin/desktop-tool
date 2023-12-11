@@ -161,6 +161,7 @@ export default function CommandTagBar(props: CommandTagBarProps) {
           onSearch={onSearch}
           onChange={onChange}
           value={searchKeyword}
+          allowClear
         />
       ) : null}
     </div>
