@@ -1,10 +1,12 @@
 .root {
-
+  display: flex;
+  flex-direction: column;
 }
 .container {
-  display: block;
-  // flex-direction: row;
-  // flex-wrap: wrap;
+  // display: block;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding: 10px 20px;
 }
 

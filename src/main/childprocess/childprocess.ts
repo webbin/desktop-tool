@@ -1,5 +1,12 @@
-import { exec, execSync } from 'child_process';
+import {
+  exec,
+  execSync,
+  spawn,
+  ChildProcessWithoutNullStreams,
+} from 'child_process';
 import iconv from 'iconv-lite';
+
+import DataUtils from '../../utils/DataUtils';
 
 const options = {
   shell: 'C:\\Program Files\\Git\\bin\\bash.exe',
@@ -48,4 +55,52 @@ function execCommandAsync(command: string) {
   });
 }
 
-export { execCommand, execCommandAsync, execCommandSync, setShellPath };
+const processMap: { [key: string]: ChildProcessWithoutNullStreams } = {};
+
+type SpawnData = {
+  command: string;
+  args?: string[];
+  opts?: any;
+};
+
+type SpawnCallback = {
+  onResponse: (id: string, result: string) => void;
+  onError: (id: string, err: string) => void;
+  onClose: (id: string) => void;
+};
+
+function execSpawn(spawnData: SpawnData, callbacks: SpawnCallback) {
+  const processId = DataUtils.UUID();
+
+  const proc = spawn(spawnData.command, spawnData.args, spawnData.opts);
+
+  proc.stdout.on('data', (data) => {
+    callbacks.onResponse(processId, data);
+  });
+
+  proc.stderr.on('data', (data) => {
+    callbacks.onError(processId, data);
+  });
+
+  proc.on('close', (code) => {
+    // close
+    console.log('spawn exec close command: ', spawnData.command);
+    console.log('spawn exec close ', code);
+
+    callbacks.onClose(processId);
+    delete processMap[processId];
+    // proc.stdin.end();
+  });
+
+  processMap[processId] = proc;
+
+  return processId;
+}
+
+export {
+  execCommand,
+  execCommandAsync,
+  execCommandSync,
+  execSpawn,
+  setShellPath,
+};

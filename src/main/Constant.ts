@@ -4,6 +4,10 @@ export const CHOOSE_SHELL_PATH = 'choose-shell-path';
 
 export const EXECUTE_COMMAND = 'exec-command';
 
+export const EXECUTE_SPAWN = 'exec-spawn';
+
+export const SPAWN_RESPONSE = 'spawn-response';
+
 export const GET_COMMAND_LIST = 'get-command-list';
 
 export const REPLY_COMMAND_LIST = 'reply-command-list';

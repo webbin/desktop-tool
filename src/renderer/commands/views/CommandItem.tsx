@@ -87,6 +87,8 @@ export default function CommandItem(props: CommandItemProp) {
         running: true,
       })
     );
+    console.log('run command : ', data);
+    console.log('run command ', data.command);
     window.electron.ipcRenderer
       .execCommand<string>(data.command)
       .then((result) => {
@@ -141,7 +143,7 @@ export default function CommandItem(props: CommandItemProp) {
           value={editCommand}
         />
       ) : (
-        <p className={styles.command}>{data.command}</p>
+        <div className={styles.command}>{data.command}</div>
       )}
       {editing ? null : (
         <div className={styles.option_button_container}>

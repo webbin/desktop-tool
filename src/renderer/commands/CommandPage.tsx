@@ -15,7 +15,6 @@ import CommandListView from './views/CommandListView';
 import CommandResultView from './views/CommandResultView';
 import CommandTagModal from './views/CommandTagModal';
 import CommandTagBar from './views/CommandTagBar';
-import ShellPathView from './views/ShellPathView';
 import CommandListModal from './dialogs/CommandListModal';
 import ImportCommandModal from './dialogs/ImportCommandModal';
 
@@ -73,16 +72,15 @@ export default function CommandPage() {
   return (
     <div id="command-page" className={styles.root}>
       <div
-        onClick={(event) => {
-          if (addVisible) {
-            setAddVisible(false);
-            event.preventDefault();
-            event.stopPropagation();
-          }
-        }}
+        // onClick={(event) => {
+        //   if (addVisible) {
+        //     setAddVisible(false);
+        //     event.preventDefault();
+        //     event.stopPropagation();
+        //   }
+        // }}
         className={styles.column_container}
       >
-        <ShellPathView />
         <CommandTagBar showFilter={filterVisible} />
         <div className={styles.main_content}>
           <CommandListView

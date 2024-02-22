@@ -14,8 +14,18 @@ import { app, BrowserWindow, dialog, shell, ipcMain } from 'electron';
 // import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { EXECUTE_COMMAND, SET_SHELL_PATH, CHOOSE_SHELL_PATH } from './Constant';
-import { execCommandAsync, setShellPath } from './childprocess/childprocess';
+import {
+  EXECUTE_COMMAND,
+  SET_SHELL_PATH,
+  CHOOSE_SHELL_PATH,
+  EXECUTE_SPAWN,
+  SPAWN_RESPONSE,
+} from './Constant';
+import {
+  execCommandAsync,
+  execSpawn,
+  setShellPath,
+} from './childprocess/childprocess';
 import { platform } from 'os';
 
 // class AppUpdater {
@@ -60,6 +70,36 @@ ipcMain.handle(CHOOSE_SHELL_PATH, async (event, arg) => {
     return undefined;
   }
   return res.filePaths[0];
+});
+
+ipcMain.handle(EXECUTE_SPAWN, (event, arg) => {
+  const { command, args, opts } = arg;
+  const id = execSpawn(
+    { command, args, opts },
+    {
+      onResponse: (processId, result) => {
+        mainWindow?.webContents.send(SPAWN_RESPONSE, {
+          id: processId,
+          data: result,
+          type: 'response',
+        });
+      },
+      onError: (processId, error) => {
+        mainWindow?.webContents.send(SPAWN_RESPONSE, {
+          id: processId,
+          data: error,
+          type: 'error',
+        });
+      },
+      onClose: (processId) => {
+        mainWindow?.webContents.send(SPAWN_RESPONSE, {
+          id: processId,
+          type: 'close',
+        });
+      },
+    }
+  );
+  return id;
 });
 
 ipcMain.on(SET_SHELL_PATH, (event, arg) => {

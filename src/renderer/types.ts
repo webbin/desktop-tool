@@ -5,6 +5,14 @@ type CommandData = {
   tag?: string;
 };
 
+type SpawnData = {
+  title?: string;
+  command: string;
+  key: string;
+  tag?: string;
+  args?: string[];
+};
+
 type CommandResultInfo = {
   command: string;
   result: string;
@@ -22,4 +30,10 @@ type CommandSearchMap = {
   [key: string]: CommandSearchInfo;
 };
 
-export { CommandData, CommandResultInfo, CommandSearchInfo, CommandSearchMap };
+export {
+  CommandData,
+  CommandResultInfo,
+  CommandSearchInfo,
+  CommandSearchMap,
+  SpawnData,
+};

@@ -12,6 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 import commandList from './CommandListReducer';
+import spawnList from './SpawnListReducer';
 import commandInfo from './CommandInfoReducer';
 import commandResultList from './CommandResultList';
 import commandUseInfo from './CommandUseInfoReducer';
@@ -21,12 +22,13 @@ const rootReducer = combineReducers({
   commandInfo,
   commandResultList,
   commandUseInfo,
+  spawnList,
 });
 const persistedReducer = persistReducer(
   {
     key: 'root',
     storage,
-    whitelist: ['commandList', 'commandUseInfo'],
+    whitelist: ['commandList', 'commandUseInfo', 'SpawnList'],
   },
   rootReducer
 );

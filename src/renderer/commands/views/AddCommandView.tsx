@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { message, Button } from 'antd';
-import { useSpring, animated } from 'react-spring';
+import { message, Modal } from 'antd';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { addCommand } from '../../redux/actions';
@@ -25,9 +24,6 @@ export default function AddCommandView(props: Props) {
     (store) => store.commandInfo.selectedTagList[0]
   );
 
-  // const commandRef = useRef<HTMLInputElement>(null);
-  // const titleRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     if (visible) {
       if (selectedTag && selectedTag !== TAG_NONE) {
@@ -38,12 +34,12 @@ export default function AddCommandView(props: Props) {
     }
   }, [visible, selectedTag]);
 
-  const { transform } = useSpring({
-    transform: `translateX(${visible ? 300 : 0}px)`,
-    config: {
-      duration: 300,
-    },
-  });
+  // const { transform } = useSpring({
+  //   transform: `translateX(${visible ? 300 : 0}px)`,
+  //   config: {
+  //     duration: 300,
+  //   },
+  // });
 
   const onAddCommand = useCallback(
     (cmd: string, tit?: string, commandTag?: string) => {
@@ -64,50 +60,58 @@ export default function AddCommandView(props: Props) {
   );
 
   return (
-    <animated.div
-      style={{
-        transform,
+    // <animated.div
+    //   style={{
+    //     transform,
+    //   }}
+    //   className={styles.input_row}
+    // >
+    <Modal
+      open={visible}
+      onOk={() => {
+        onAddCommand(command.trim(), title.trim(), tag);
+        onAddConfirm();
       }}
-      className={styles.input_row}
+      onCancel={onAddConfirm}
+      className={styles.add_command_modal}
+      title={<div className={styles.modal_title}>Add Command</div>}
     >
       {contextHolder}
-      <span>Tag(Optional):</span>
-      <input
-        maxLength={15}
-        value={tag}
-        onChange={(event) => {
-          setTag(event.target.value);
-        }}
-        className={styles.input}
-      />
-      <span>Title:</span>
-      <input
-        maxLength={30}
-        value={title}
-        onChange={(event) => {
-          setTitle(event.target.value);
-        }}
-        className={styles.input}
-        // ref={titleRef}
-      />
-      <span>Command:</span>
-      <textarea
-        value={command}
-        onChange={(event) => {
-          setCommand(event.target.value);
-        }}
-        className={styles.command_input}
-      />
-      <Button
-        type="primary"
-        className={styles.add_button}
-        onClick={() => {
-          onAddCommand(command.trim(), title.trim(), tag);
-          onAddConfirm();
-        }}
-      >
-        Add
-      </Button>
-    </animated.div>
+      <div className={styles.add_command_input_row}>
+        <span className={styles.add_command_title}>Tag(Optional):</span>
+        <input
+          maxLength={15}
+          value={tag}
+          onChange={(event) => {
+            setTag(event.target.value);
+          }}
+          className={styles.input}
+        />
+      </div>
+
+      <div className={styles.add_command_input_row}>
+        <span className={styles.add_command_title}>Title:</span>
+        <input
+          maxLength={30}
+          value={title}
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+          className={styles.input}
+          // ref={titleRef}
+        />
+      </div>
+
+      <div className={styles.add_command_input_row}>
+        <span className={styles.add_command_title}>Command:</span>
+        <textarea
+          value={command}
+          onChange={(event) => {
+            setCommand(event.target.value);
+          }}
+          className={styles.command_input}
+        />
+      </div>
+    </Modal>
   );
 }

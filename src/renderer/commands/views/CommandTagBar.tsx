@@ -2,7 +2,7 @@
 /* eslint-disable no-lonely-if */
 /* eslint-disable react/no-array-index-key */
 import React, { useMemo, useRef, useEffect } from 'react';
-import { Button, Tag, Input, InputRef } from 'antd';
+import { Tag, Input, InputRef } from 'antd';
 import classnames from 'classnames';
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
@@ -141,7 +141,7 @@ export default function CommandTagBar(props: CommandTagBarProps) {
   };
 
   return (
-    <div>
+    <div className={styles.root}>
       <div className={styles.container}>
         <CommandTagItem key="tag-all" tag={TAG_ALL} />
         <CommandTagItem key="tag-none" tag={TAG_NONE} />
