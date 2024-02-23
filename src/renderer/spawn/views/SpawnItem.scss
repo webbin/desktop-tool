@@ -1,0 +1,49 @@
+.root {
+  position: relative;
+  padding: 10px 16px;
+  // margin-bottom: 8px;
+}
+
+.root:hover {
+  background-color: #ccc;
+}
+.root:focus {
+  background-color: #ddd;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.spawn_command {
+  font-size: 16px;
+  color: #666;
+  display: block;
+}
+
+.float_menu_container {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.float_menu_button {
+  background-color: transparent;
+  border: none;
+}
+
+.command_running_rag {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 5px;
+  border-radius: 10px;
+  width: 6px;
+  height: 6px;
+  background-color: #4fc;
+  box-shadow: 1px 1px 1px #ccc;
+}

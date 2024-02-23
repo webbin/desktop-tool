@@ -97,10 +97,19 @@ function execSpawn(spawnData: SpawnData, callbacks: SpawnCallback) {
   return processId;
 }
 
+const stopSpawn = (id: string) => {
+  const proc = processMap[id];
+  if (proc) {
+    return proc.kill();
+  }
+  return true;
+};
+
 export {
   execCommand,
   execCommandAsync,
   execCommandSync,
   execSpawn,
+  stopSpawn,
   setShellPath,
 };

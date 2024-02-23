@@ -6,6 +6,8 @@ export const EXECUTE_COMMAND = 'exec-command';
 
 export const EXECUTE_SPAWN = 'exec-spawn';
 
+export const STOP_SPAWN = 'stop-spawn';
+
 export const SPAWN_RESPONSE = 'spawn-response';
 
 export const GET_COMMAND_LIST = 'get-command-list';

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { message, Modal, Button, ConfigProvider } from 'antd';
+import { message, Modal, Button, ConfigProvider, theme } from 'antd';
 import { MinusCircleFilled, PlusCircleFilled } from '@ant-design/icons';
 
 import styles from '../../commands/views/AddCommandView.scss';
 import addSpawnStyles from './AddSpawnModal.scss';
 import { useAppDispatch } from '../../redux/hooks';
 import { addSpawn } from '../../redux/actions';
-import DataUtil from 'renderer/utils/DataUtil';
+import DataUtil from '../../utils/DataUtil';
 
 interface Props {
   visible: boolean;
@@ -59,98 +59,106 @@ function AddSpawnModal(props: Props) {
   };
 
   return (
-    <Modal
-      open={visible}
-      onOk={onAddSpawn}
-      onCancel={dismiss}
-      className={styles.add_command_modal}
-      title={<div className={styles.modal_title}>Add Spawn Command</div>}
+    <ConfigProvider
+      theme={{
+        token: {
+          motion: false,
+        },
+        // components: {
+        //   Button: {
+        //     motion: false,
+        //   },
+        // },
+      }}
     >
-      {contextHolder}
-      <div className={addSpawnStyles.modal_root}>
-        <div className={styles.add_command_input_row}>
-          <span className={styles.add_command_title}>Title:</span>
-          <input
-            maxLength={30}
-            value={title}
-            onChange={(event) => {
-              setTitle(event.target.value);
-            }}
-            className={styles.input}
-            // ref={titleRef}
-          />
-        </div>
+      <Modal
+        open={visible}
+        onOk={onAddSpawn}
+        onCancel={dismiss}
+        className={styles.add_command_modal}
+        title={<div className={styles.modal_title}>Add Spawn Command</div>}
+      >
+        {contextHolder}
+        <div className={addSpawnStyles.modal_root}>
+          <div className={styles.add_command_input_row}>
+            <span className={styles.add_command_title}>Title:</span>
+            <input
+              maxLength={30}
+              value={title}
+              onChange={(event) => {
+                setTitle(event.target.value);
+              }}
+              className={styles.input}
+              // ref={titleRef}
+            />
+          </div>
 
-        <div className={styles.add_command_input_row}>
-          <span className={styles.add_command_title}>Command:</span>
-          <input
-            maxLength={12}
-            value={command}
-            onChange={(event) => {
-              setCommand(event.target.value);
-            }}
-            className={styles.input}
-            // ref={titleRef}
-          />
-        </div>
-        <div className={styles.add_command_input_row}>
-          <span className={styles.add_command_title}>
-            Args
-            {argList.length < 10 ? (
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Button: {
+          <div className={styles.add_command_input_row}>
+            <span className={styles.add_command_title}>Command:</span>
+            <input
+              maxLength={12}
+              value={command}
+              onChange={(event) => {
+                setCommand(event.target.value);
+              }}
+              className={styles.input}
+              // ref={titleRef}
+            />
+          </div>
+          <div className={styles.add_command_input_row}>
+            <span className={styles.add_command_title}>
+              Args
+              {argList.length < 10 ? (
+                <ConfigProvider
+                  theme={{
+                    token: {
                       motion: false,
                     },
-                  },
-                }}
-              >
-                <Button
-                  className={addSpawnStyles.add_arg_button}
-                  icon={<PlusCircleFilled />}
-                  onClick={() => {
-                    setArgList((old) => {
-                      return [...old, ''];
-                    });
-                  }}
-                />
-              </ConfigProvider>
-            ) : null}
-          </span>
-        </div>
-
-        <div className={addSpawnStyles.args_container}>
-          {argList.map((item, index) => {
-            const key = `${index}`;
-            return (
-              <div className={addSpawnStyles.arg_row} key={key}>
-                <span className={addSpawnStyles.arg_index_text}>
-                  No. {index + 1} :
-                </span>
-                <input
-                  maxLength={12}
-                  value={item}
-                  onChange={(event) => {
-                    setArgList((old) => {
-                      const l = [...old];
-                      l[index] = event.target.value;
-                      return l;
-                    });
-                  }}
-                  className={styles.input}
-                  // ref={titleRef}
-                />
-                {index > 0 ? (
-                  <ConfigProvider
-                    theme={{
-                      components: {
-                        Button: {
-                          motion: false,
-                        },
+                    components: {
+                      Button: {
+                        motionBase: 0,
                       },
+                      Wave: false,
+                    },
+                    // algorithm: false,
+                  }}
+                >
+                  <Button
+                    className={addSpawnStyles.add_arg_button}
+                    icon={<PlusCircleFilled />}
+                    onClick={() => {
+                      setArgList((old) => {
+                        return [...old, ''];
+                      });
                     }}
-                  >
+                  />
+                </ConfigProvider>
+              ) : null}
+            </span>
+          </div>
+
+          <div className={addSpawnStyles.args_container}>
+            {argList.map((item, index) => {
+              const key = `${index}`;
+              return (
+                <div className={addSpawnStyles.arg_row} key={key}>
+                  <span className={addSpawnStyles.arg_index_text}>
+                    No. {index + 1} :
+                  </span>
+                  <input
+                    maxLength={12}
+                    value={item}
+                    onChange={(event) => {
+                      setArgList((old) => {
+                        const l = [...old];
+                        l[index] = event.target.value;
+                        return l;
+                      });
+                    }}
+                    className={styles.input}
+                    // ref={titleRef}
+                  />
+                  {index > 0 ? (
                     <Button
                       className={addSpawnStyles.arg_del_button}
                       icon={<MinusCircleFilled />}
@@ -162,14 +170,14 @@ function AddSpawnModal(props: Props) {
                         });
                       }}
                     />
-                  </ConfigProvider>
-                ) : null}
-              </div>
-            );
-          })}
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+    </ConfigProvider>
   );
 }
 

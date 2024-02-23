@@ -28,7 +28,7 @@ const persistedReducer = persistReducer(
   {
     key: 'root',
     storage,
-    whitelist: ['commandList', 'commandUseInfo', 'SpawnList'],
+    whitelist: ['commandList', 'commandUseInfo', 'spawnList'],
   },
   rootReducer
 );

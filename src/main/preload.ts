@@ -12,6 +12,8 @@ import {
   SHOW_IMPORT_COMMAND_LIST,
   TOGGLE_COMMAND_FILTER,
   CHOOSE_SHELL_PATH,
+  STOP_SPAWN,
+  EXECUTE_SPAWN,
 } from './Constant';
 
 export type Channels = 'ipc-example';
@@ -59,6 +61,19 @@ const electronHandler = {
     setToggleAddCommandCallback(toggleAddCommand: () => void) {
       ipcRenderer.on(SHOW_ADD_COMMAND, toggleAddCommand);
     },
+    runSpawnCommand(command: string, args?: string[], opts?: any) {
+      ipcRenderer.send(EXECUTE_SPAWN, {
+        command,
+        args,
+        opts,
+      });
+    },
+    stopSpawnCommand(processId: string) {
+      ipcRenderer.send(STOP_SPAWN, processId);
+    },
+    setSpawnResponseCallback(callback: (data: any) => void) {
+
+    }
   },
   hostData: {
     versions: process.versions,

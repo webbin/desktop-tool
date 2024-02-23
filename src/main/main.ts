@@ -20,11 +20,13 @@ import {
   CHOOSE_SHELL_PATH,
   EXECUTE_SPAWN,
   SPAWN_RESPONSE,
+  STOP_SPAWN,
 } from './Constant';
 import {
   execCommandAsync,
   execSpawn,
   setShellPath,
+  stopSpawn,
 } from './childprocess/childprocess';
 import { platform } from 'os';
 
@@ -100,6 +102,11 @@ ipcMain.handle(EXECUTE_SPAWN, (event, arg) => {
     }
   );
   return id;
+});
+
+ipcMain.handle(STOP_SPAWN, (event, arg) => {
+  const id = arg;
+  return stopSpawn(id);
 });
 
 ipcMain.on(SET_SHELL_PATH, (event, arg) => {
